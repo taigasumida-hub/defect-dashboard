@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不良率ダッシュボード</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.0/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b35;
+    --navy2: #142040;
+    --navy3: #1a2952;
+    --navy4: #1f3266;
+    --sky: #aec8e8;
+    --sky2: #c8dcf0;
+    --sky3: #e8f0f8;
+    --gold: #c9a96e;
+    --gold2: #e2c99a;
+    --gold3: #f0e0c0;
+    --rose: #e8b4c0;
+    --teal: #7cc8c8;
+    --text: #f0f4f8;
+    --text2: #a8bcd0;
+    --text3: #6080a0;
+    --border: rgba(174,200,232,0.12);
+    --border2: rgba(174,200,232,0.22);
+    --card: rgba(20,32,64,0.7);
+    --card2: rgba(26,41,82,0.5);
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--navy);
+    background-image:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(100,140,200,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 80%, rgba(201,169,110,0.05) 0%, transparent 60%);
+    color:var(--text);
+    font-family:'Zen Kaku Gothic New',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* ===== PASSWORD ===== */
+  #pw-screen{
+    position:fixed;inset:0;background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    z-index:9999;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 30% 20%, rgba(100,150,220,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 70% 70%, rgba(201,169,110,0.07) 0%, transparent 60%);
+  }
+  .pw-wrap{text-align:center;max-width:380px;width:90%;}
+  .pw-icon{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--gold);letter-spacing:6px;margin-bottom:8px;}
+  .pw-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--sky2);margin-bottom:4px;letter-spacing:3px;}
+  .pw-sub{font-size:11px;color:var(--text3);letter-spacing:3px;margin-bottom:40px;text-transform:uppercase;}
+  .pw-box{
+    background:rgba(20,32,64,0.8);
+    border:1px solid var(--border2);
+    border-radius:20px;
+    padding:40px 36px;
+    backdrop-filter:blur(20px);
+    box-shadow:0 0 60px rgba(100,140,220,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .pw-label{font-size:11px;letter-spacing:3px;color:var(--text3);margin-bottom:12px;text-transform:uppercase;}
+  .pw-input{
+    width:100%;padding:14px 20px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--border2);
+    border-radius:12px;color:var(--text);
+    font-size:20px;letter-spacing:8px;text-align:center;
+    outline:none;transition:border-color .3s;
+    font-family:'Cormorant Garamond',serif;
+  }
+  .pw-input:focus{border-color:var(--sky);}
+  .pw-btn{
+    width:100%;margin-top:16px;padding:14px;
+    background:linear-gradient(135deg,var(--navy4),var(--navy3));
+    border:1px solid var(--sky);
+    border-radius:12px;
+    color:var(--sky2);font-size:13px;letter-spacing:3px;
+    cursor:pointer;transition:all .3s;
+    text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .pw-btn:hover{background:linear-gradient(135deg,var(--navy3),var(--navy4));border-color:var(--sky2);color:var(--text);}
+  .pw-deco{width:40px;height:1px;background:var(--gold);margin:24px auto 0;}
+  .pw-error{color:var(--rose);font-size:12px;margin-top:12px;letter-spacing:1px;display:none;}
+
+  /* ===== LOADING ===== */
+  #loading{
+    position:fixed;inset:0;background:var(--navy);z-index:500;
+    display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  }
+  .loading-word{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;animation:fade 1.5s ease infinite;}
+  @keyframes fade{0%,100%{opacity:.3}50%{opacity:1}}
+  .loading-bar{width:160px;height:1px;background:var(--border2);border-radius:1px;overflow:hidden;}
+  .loading-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--gold));animation:load 1.8s ease infinite;}
+  @keyframes load{0%{width:0%;margin-left:0}50%{width:80%;margin-left:10%}100%{width:0%;margin-left:100%}}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+
+  /* HEADER */
+  .header{
+    background:rgba(13,27,53,0.95);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    padding:0 40px;height:68px;
+    display:flex;align-items:center;justify-content:space-between;
+    position:sticky;top:0;z-index:100;
+  }
+  .header-left{display:flex;align-items:center;gap:20px;}
+  .header-brand{
+    font-family:'Cormorant Garamond',serif;
+    font-size:20px;font-weight:300;letter-spacing:4px;
+    color:var(--gold2);
+  }
+  .header-div{width:1px;height:24px;background:var(--border2);}
+  .header-title{font-size:14px;color:var(--text2);letter-spacing:1px;}
+  .header-chip{
+    background:rgba(174,200,232,0.06);border:1px solid var(--border);
+    border-radius:20px;padding:4px 14px;font-size:11px;color:var(--text3);letter-spacing:1px;
+  }
+  .header-right{display:flex;align-items:center;gap:16px;}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(0.8)}}
+  .live-text{font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
+  .reload-btn{
+    background:transparent;border:1px solid var(--border);
+    border-radius:8px;color:var(--text3);padding:7px 16px;font-size:12px;
+    cursor:pointer;transition:all .3s;letter-spacing:1px;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .reload-btn:hover{border-color:var(--sky);color:var(--sky);}
+
+  /* MAIN */
+  .main{padding:32px 40px;max-width:1600px;margin:0 auto;}
+
+  /* SECTION TITLE */
+  .sec-title{
+    font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;
+    letter-spacing:4px;color:var(--gold);text-transform:uppercase;
+    margin-bottom:16px;display:flex;align-items:center;gap:12px;
+  }
+  .sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+
+  /* KPI */
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+  .kpi-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:24px 28px;
+    position:relative;overflow:hidden;
+    transition:border-color .3s;
+  }
+  .kpi-card:hover{border-color:var(--border2);}
+  .kpi-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--kpi-color,var(--sky)),transparent);
+  }
+  .kpi-card::after{
+    content:'';position:absolute;top:0;right:0;
+    width:80px;height:80px;border-radius:50%;
+    background:radial-gradient(circle,var(--kpi-color,var(--sky)) 0%,transparent 70%);
+    opacity:.06;transform:translate(20px,-20px);
+  }
+  .kpi-label{font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:14px;}
+  .kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;color:var(--text);line-height:1;}
+  .kpi-sub{font-size:11px;color:var(--text3);margin-top:10px;letter-spacing:1px;}
+
+  /* FILTERS */
+  .filter-card{
+    background:var(--card);border:1px solid var(--border);border-radius:16px;
+    padding:24px 28px;margin-bottom:28px;
+  }
+  .filter-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .filter-clear{
+    background:transparent;border:1px solid var(--border);border-radius:8px;
+    color:var(--text3);padding:6px 14px;font-size:11px;cursor:pointer;
+    transition:all .3s;letter-spacing:1px;font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .filter-clear:hover{border-color:var(--rose);color:var(--rose);}
+  .filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;}
+  .filter-group label{display:block;font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
+  .filter-sel{
+    width:100%;background:rgba(255,255,255,0.03);border:1px solid var(--border);
+    border-radius:8px;color:var(--text2);padding:9px 12px;font-size:13px;
+    outline:none;cursor:pointer;transition:border-color .3s;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236080a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 12px center;
+    padding-right:32px;
+  }
+  .filter-sel:focus{border-color:var(--sky);}
+  .filter-sel option{background:var(--navy2);}
+  .filter-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .filter-tag{
+    background:rgba(174,200,232,0.08);border:1px solid rgba(174,200,232,0.2);
+    border-radius:20px;padding:5px 14px;font-size:11px;color:var(--sky2);
+    display:flex;align-items:center;gap:8px;letter-spacing:.5px;
+  }
+  .tag-x{cursor:pointer;color:var(--text3);transition:color .2s;}
+  .tag-x:hover{color:var(--rose);}
+
+  /* CHARTS */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
+  .chart-card{
+    background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;
+  }
+  .chart-card.full{grid-column:1/-1;}
+  .chart-head{
+    font-size:11px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;
+    margin-bottom:20px;display:flex;align-items:center;gap:10px;
+  }
+  .chart-pip{width:5px;height:5px;border-radius:50%;}
+  .chart-wrap{position:relative;height:260px;}
+
+  /* TABLE */
+  .table-card{
+    background:var(--card);border:1px solid var(--border);border-radius:16px;
+    overflow:hidden;margin-bottom:28px;
+  }
+  .table-top{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .table-top-title{font-size:11px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
+  .table-count{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold2);}
+  .tbl-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{
+    background:rgba(26,41,82,0.6);padding:12px 16px;
+    text-align:left;font-size:10px;letter-spacing:2px;color:var(--text3);
+    font-weight:500;border-bottom:1px solid var(--border);white-space:nowrap;text-transform:uppercase;
+  }
+  tbody tr{border-bottom:1px solid rgba(174,200,232,0.05);transition:background .2s;}
+  tbody tr:hover{background:rgba(174,200,232,0.04);}
+  tbody td{padding:11px 16px;color:var(--text2);white-space:nowrap;}
+  .badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:10px;letter-spacing:1px;text-transform:uppercase;}
+  .badge-yes{background:rgba(232,180,192,0.12);color:var(--rose);border:1px solid rgba(232,180,192,0.2);}
+  .badge-no{background:rgba(124,200,200,0.1);color:var(--teal);border:1px solid rgba(124,200,200,0.2);}
+  .table-footer{padding:16px 28px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);}
+  .pg-btn{
+    background:transparent;border:1px solid var(--border);border-radius:8px;
+    color:var(--text3);padding:7px 16px;font-size:12px;cursor:pointer;
+    transition:all .3s;letter-spacing:1px;font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .pg-btn:hover{border-color:var(--sky);color:var(--sky);}
+  .pg-btn:disabled{opacity:.25;cursor:default;}
+  .pg-info{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text3);}
+
+  /* AI */
+  .ai-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px;}
+  .ai-top{
+    padding:20px 28px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:16px;
+  }
+  .ai-gem{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(135deg,var(--navy3),var(--navy4));
+    border:1px solid var(--sky);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--sky2);
+  }
+  .ai-top-title{font-size:14px;font-weight:500;color:var(--text);}
+  .ai-top-sub{font-size:11px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+  .ai-tabs{display:flex;border-bottom:1px solid var(--border);}
+  .ai-tab{
+    padding:14px 28px;font-size:12px;letter-spacing:2px;cursor:pointer;
+    border-bottom:1px solid transparent;color:var(--text3);
+    transition:all .3s;background:none;border-top:none;border-left:none;border-right:none;
+    text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .ai-tab.on{color:var(--sky2);border-bottom-color:var(--sky);}
+  .ai-body{padding:28px;}
+  .rep-btn{
+    background:rgba(174,200,232,0.06);border:1px solid var(--border2);
+    border-radius:12px;color:var(--sky2);padding:13px 28px;
+    font-size:13px;letter-spacing:2px;cursor:pointer;
+    display:flex;align-items:center;gap:10px;transition:all .3s;
+    text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .rep-btn:hover{background:rgba(174,200,232,0.1);border-color:var(--sky);}
+  .rep-btn:disabled{opacity:.4;cursor:default;}
+  .rep-out{
+    margin-top:20px;background:rgba(255,255,255,0.02);border:1px solid var(--border);
+    border-radius:12px;padding:24px;font-size:14px;line-height:1.9;color:var(--text2);
+    white-space:pre-wrap;display:none;
+  }
+  .chat-msgs{
+    height:300px;overflow-y:auto;background:rgba(255,255,255,0.02);
+    border:1px solid var(--border);border-radius:12px;padding:16px;
+    display:flex;flex-direction:column;gap:14px;margin-bottom:12px;
+  }
+  .cmsg{display:flex;gap:10px;}
+  .cmsg.user{flex-direction:row-reverse;}
+  .cbubble{
+    max-width:72%;padding:11px 16px;border-radius:14px;font-size:13px;line-height:1.7;
+  }
+  .cmsg.ai .cbubble{background:rgba(26,41,82,0.8);border:1px solid var(--border);color:var(--text2);}
+  .cmsg.user .cbubble{background:linear-gradient(135deg,var(--navy4),var(--navy3));border:1px solid var(--border2);color:var(--sky2);}
+  .cavatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px;}
+  .cmsg.ai .cavatar{background:var(--navy3);border:1px solid var(--border);}
+  .cmsg.user .cavatar{background:var(--navy4);border:1px solid var(--border2);}
+  .suggs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .sug-btn{
+    background:rgba(174,200,232,0.04);border:1px solid var(--border);
+    border-radius:20px;color:var(--text3);padding:6px 14px;font-size:11px;
+    cursor:pointer;transition:all .3s;letter-spacing:.5px;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .sug-btn:hover{border-color:var(--sky);color:var(--sky2);}
+  .chat-row{display:flex;gap:10px;}
+  .chat-inp{
+    flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border);
+    border-radius:12px;color:var(--text);padding:12px 18px;font-size:13px;
+    outline:none;transition:border-color .3s;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .chat-inp:focus{border-color:var(--sky);}
+  .chat-send{
+    background:rgba(174,200,232,0.06);border:1px solid var(--border2);
+    border-radius:12px;color:var(--sky2);padding:12px 22px;font-size:13px;
+    cursor:pointer;transition:all .3s;letter-spacing:1px;
+    font-family:'Zen Kaku Gothic New',sans-serif;
+  }
+  .chat-send:hover{background:rgba(174,200,232,0.12);border-color:var(--sky);}
+  .chat-send:disabled{opacity:.4;cursor:default;}
+  .typing{display:flex;gap:5px;align-items:center;padding:4px 0;}
+  .typing span{width:5px;height:5px;background:var(--text3);border-radius:50%;animation:ty .9s infinite;}
+  .typing span:nth-child(2){animation-delay:.18s;}
+  .typing span:nth-child(3){animation-delay:.36s;}
+  @keyframes ty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+  ::-webkit-scrollbar{width:4px;height:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+  @media(max-width:900px){
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .charts-grid{grid-template-columns:1fr;}
+    .main{padding:20px 16px;}
+    .header{padding:0 16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD -->
+<div id="pw-screen">
+  <div class="pw-wrap">
+    <div class="pw-icon">不良率</div>
+    <div class="pw-title">Dashboard</div>
+    <div class="pw-sub">Defect Analysis System</div>
+    <div class="pw-box">
+      <div class="pw-label">Password</div>
+      <input class="pw-input" type="password" id="pw-input" placeholder="· · · · · · · ·" />
+      <button class="pw-btn" onclick="checkPw()">Enter</button>
+      <div class="pw-error" id="pw-error">パスワードが正しくありません</div>
+    </div>
+    <div class="pw-deco"></div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loading-word">Loading</div>
+  <div class="loading-bar"><div class="loading-fill"></div></div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-brand">不良率ダッシュボード</div>
+      <div class="header-div"></div>
+      <div class="header-title">Defect Analysis</div>
+      <div class="header-chip" id="updated-chip">同期中...</div>
+    </div>
+    <div class="header-right">
+      <div class="live-dot"></div>
+      <div class="live-text">Live</div>
+      <button class="reload-btn" onclick="reloadData()">再読込</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="sec-title">Overview</div>
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--kpi-color:var(--sky)">
+        <div class="kpi-label">総検品レコード数</div>
+        <div class="kpi-val" id="kpi-total">—</div>
+        <div class="kpi-sub">フィルター適用後</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--rose)">
+        <div class="kpi-label">不良発生件数</div>
+        <div class="kpi-val" id="kpi-defects">—</div>
+        <div class="kpi-sub" id="kpi-rate">不良率 —%</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--gold)">
+        <div class="kpi-label">不良品数合計</div>
+        <div class="kpi-val" id="kpi-qty">—</div>
+        <div class="kpi-sub">数量の合計</div>
+      </div>
+      <div class="kpi-card" style="--kpi-color:var(--teal)">
+        <div class="kpi-label">対象工場数</div>
+        <div class="kpi-val" id="kpi-fac">—</div>
+        <div class="kpi-sub">ユニーク工場</div>
+      </div>
+    </div>
+
+    <div class="sec-title">Filters</div>
+    <div class="filter-card">
+      <div class="filter-top">
+        <span style="font-size:11px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;">絞り込み条件</span>
+        <button class="filter-clear" onclick="clearFilters()">クリア</button>
+      </div>
+      <div class="filter-grid" id="filter-grid"></div>
+      <div class="filter-tags" id="filter-tags"></div>
+    </div>
+
+    <div class="sec-title">Analytics</div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-head"><div class="chart-pip" style="background:var(--sky)"></div>不良項目ランキング</div>
+        <div class="chart-wrap"><canvas id="c-rank"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head"><div class="chart-pip" style="background:var(--rose)"></div>不良カテゴリ構成</div>
+        <div class="chart-wrap"><canvas id="c-pie"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-head"><div class="chart-pip" style="background:var(--gold)"></div>月別トレンド</div>
+        <div class="chart-wrap"><canvas id="c-trend"></canvas></div>
+      </div>
+      <div class="chart-card full">
+        <div class="chart-head"><div class="chart-pip" style="background:var(--teal)"></div>工場別 不良件数</div>
+        <div class="chart-wrap"><canvas id="c-fac"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec-title">Data</div>
+    <div class="table-card">
+      <div class="table-top">
+        <div class="table-top-title">Records</div>
+        <div class="table-count" id="t-count">— 件</div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr id="t-head"></tr></thead>
+          <tbody id="t-body"></tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <button class="pg-btn" id="pg-prev" onclick="changePg(-1)">← 前へ</button>
+        <div class="pg-info" id="pg-info">— / —</div>
+        <button class="pg-btn" id="pg-next" onclick="changePg(1)">次へ →</button>
+      </div>
+    </div>
+
+    <div class="sec-title">AI Assistant</div>
+    <div class="ai-card">
+      <div class="ai-top">
+        <div class="ai-gem">✦</div>
+        <div>
+          <div class="ai-top-title">AI アシスタント</div>
+          <div class="ai-top-sub">データに基づいた分析・質問応答</div>
+        </div>
+      </div>
+      <div class="ai-tabs">
+        <button class="ai-tab on" onclick="swTab('rep',this)">自動分析レポート</button>
+        <button class="ai-tab" onclick="swTab('chat',this)">AI チャット</button>
+      </div>
+      <div class="ai-body">
+        <div id="t-rep">
+          <button class="rep-btn" id="rep-btn" onclick="genReport()">✦ &nbsp;現在のデータを分析する</button>
+          <div class="rep-out" id="rep-out"></div>
+        </div>
+        <div id="t-chat" style="display:none">
+          <div class="suggs">
+            <button class="sug-btn" onclick="useSug(this)">不良率が高い工場は？</button>
+            <button class="sug-btn" onclick="useSug(this)">最も多い不良項目は？</button>
+            <button class="sug-btn" onclick="useSug(this)">改善すべき優先事項は？</button>
+            <button class="sug-btn" onclick="useSug(this)">月別トレンドを教えて</button>
+            <button class="sug-btn" onclick="useSug(this)">仕入先別の比較をして</button>
+          </div>
+          <div class="chat-msgs" id="chat-msgs">
+            <div class="cmsg ai">
+              <div class="cavatar">✦</div>
+              <div class="cbubble">こんにちは。不良率データについて何でも聞いてください。フィルターを絞り込んだ状態での分析も可能です。</div>
+            </div>
+          </div>
+          <div class="chat-row">
+            <input class="chat-inp" id="chat-inp" placeholder="例：シンコウ上海の傾向を教えて" onkeydown="if(event.key==='Enter')sendChat()" />
+            <button class="chat-send" id="chat-send" onclick="sendChat()">送信</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SHEET='1ueCaG5BejSItYP8xaSBz_Vxl89ld6J06fTOpNqKChYg';
+const GID='1958561503';
+const CSV=`https://docs.google.com/spreadsheets/d/${SHEET}/export?format=csv&gid=${GID}`;
+const PW='kakurega7125';
+
+let allData=[],filtered=[],pg=1,PG=20,charts={},history=[],filters={};
+
+document.getElementById('pw-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPw();});
+
+function checkPw(){
+  if(document.getElementById('pw-input').value===PW){
+    document.getElementById('pw-screen').style.display='none';
+    document.getElementById('loading').style.display='flex';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else {
+    const e=document.getElementById('pw-error');
+    e.style.display='block';
+    setTimeout(()=>e.style.display='none',2200);
+  }
+}
+
+async function loadData(){
+  try{
+    const r=await fetch(CSV);
+    const t=await r.text();
+    const p=Papa.parse(t,{header:true,skipEmptyLines:true});
+    allData=p.data; filtered=[...allData];
+    buildFilters(); applyFilters();
+    document.getElementById('updated-chip').textContent=new Date().toLocaleString('ja-JP');
+    document.getElementById('loading').style.display='none';
+  }catch(e){
+    document.getElementById('loading').innerHTML='<div style="color:var(--rose);text-align:center;font-size:14px;letter-spacing:1px">データ読み込みエラー<br><span style="font-size:11px;opacity:.6">スプレッドシートの共有設定を確認してください</span></div>';
+  }
+}
+function reloadData(){document.getElementById('loading').style.display='flex';loadData();}
+
+function buildFilters(){
+  const cols=allData.length?Object.keys(allData[0]):[];
+  const grid=document.getElementById('filter-grid');
+  grid.innerHTML='';
+  cols.slice(0,10).forEach(col=>{
+    const vals=[...new Set(allData.map(r=>r[col]).filter(Boolean))].sort();
+    if(vals.length<2||vals.length>80)return;
+    const d=document.createElement('div');
+    d.className='filter-group';
+    d.innerHTML=`<label>${col}</label><select class="filter-sel" onchange="onFil('${col}',this.value)"><option value="">すべて</option>${vals.map(v=>`<option value="${v}">${v}</option>`).join('')}</select>`;
+    grid.appendChild(d);
+  });
+}
+
+function onFil(k,v){
+  if(v)filters[k]=v; else delete filters[k];
+  pg=1; applyFilters(); renderTags();
+}
+function renderTags(){
+  document.getElementById('filter-tags').innerHTML=Object.entries(filters).map(([k,v])=>`<div class="filter-tag">${k}：${v}<span class="tag-x" onclick="rmFil('${k}')"> ✕</span></div>`).join('');
+}
+function rmFil(k){
+  delete filters[k];
+  document.querySelectorAll('.filter-sel').forEach(s=>{if(s.previousElementSibling?.textContent===k)s.value='';});
+  applyFilters(); renderTags();
+}
+function clearFilters(){
+  filters={};
+  document.querySelectorAll('.filter-sel').forEach(s=>s.value='');
+  applyFilters(); renderTags();
+}
+function applyFilters(){
+  filtered=allData.filter(r=>Object.entries(filters).every(([k,v])=>r[k]===v));
+  updateKPI(); renderCharts(); renderTable();
+}
+
+function gk(row,kw){return Object.keys(row).find(k=>k.includes(kw));}
+
+function updateKPI(){
+  const n=filtered.length;
+  const defR=filtered.filter(r=>{const k=gk(r,'不良の有無');return k&&r[k]==='あり';});
+  let qty=0;
+  filtered.forEach(row=>{Object.keys(row).forEach(k=>{if(k.match(/数量/)){const v=parseInt(row[k])||0;qty+=v;}});});
+  const facs=new Set(filtered.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
+  document.getElementById('kpi-total').textContent=n.toLocaleString();
+  document.getElementById('kpi-defects').textContent=defR.length.toLocaleString();
+  document.getElementById('kpi-rate').textContent=`不良率 ${n>0?((defR.length/n)*100).toFixed(1):'—'}%`;
+  document.getElementById('kpi-qty').textContent=qty.toLocaleString();
+  document.getElementById('kpi-fac').textContent=facs;
+}
+
+const PAL=['#aec8e8','#e8b4c0','#c9a96e','#7cc8c8','#c8a8e0','#90c8a0','#e8c870','#b8d8f0','#f0b8b0','#a8c8d8'];
+
+function mkChart(id,type,labels,datasets,opts={}){
+  const ctx=document.getElementById(id).getContext('2d');
+  if(charts[id])charts[id].destroy();
+  charts[id]=new Chart(ctx,{type,data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:opts.legend||false,labels:{color:'#a8bcd0',font:{size:11},padding:14}}},
+    scales:type==='doughnut'?{}:{
+      x:{ticks:{color:'#a8bcd0',font:{size:11}},grid:{color:'rgba(174,200,232,0.06)'},border:{color:'transparent'}},
+      y:{ticks:{color:'#a8bcd0',font:{size:11}},grid:{color:'rgba(174,200,232,0.06)'},border:{color:'transparent'}}
+    },
+    ...opts
+  }});
+}
+
+function renderCharts(){
+  // rank
+  const rc={};
+  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())rc[v]=(rc[v]||0)+1;}}));
+  const rs=Object.entries(rc).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  mkChart('c-rank','bar',rs.map(x=>x[0]),[{data:rs.map(x=>x[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]);
+  // pie
+  const pc={};
+  filtered.forEach(r=>{const k=gk(r,'不良項目①');if(k){const v=r[k];if(v&&v!=='なし'&&v.trim())pc[v]=(pc[v]||0)+1;}});
+  const ps=Object.entries(pc).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  mkChart('c-pie','doughnut',ps.map(x=>x[0]),[{data:ps.map(x=>x[1]),backgroundColor:PAL,borderWidth:0,hoverOffset:6}],{legend:true,cutout:'62%'});
+  // trend
+  const tc={};
+  filtered.forEach(r=>{const k=gk(r,'報告月');if(k&&r[k])tc[r[k]]=(tc[r[k]]||0)+1;});
+  const tk=Object.keys(tc).sort();
+  mkChart('c-trend','line',tk,[{data:tk.map(k=>tc[k]),borderColor:'#c9a96e',backgroundColor:'rgba(201,169,110,0.08)',fill:true,tension:.4,pointBackgroundColor:'#c9a96e',pointRadius:4,pointHoverRadius:6}]);
+  // factory
+  const fc={};
+  filtered.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])fc[r[k]]=(fc[r[k]]||0)+1;});
+  const fs=Object.entries(fc).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  mkChart('c-fac','bar',fs.map(x=>x[0]),[{data:fs.map(x=>x[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]);
+}
+
+function renderTable(){
+  const cols=allData.length?Object.keys(allData[0]).slice(0,13):[];
+  const head=document.getElementById('t-head');
+  if(!head.children.length) head.innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+  const sl=filtered.slice((pg-1)*PG,pg*PG);
+  document.getElementById('t-body').innerHTML=sl.map(r=>
+    `<tr>${cols.map(c=>{
+      let v=r[c]||'';
+      if(c.includes('不良の有無'))v=v==='あり'?`<span class="badge badge-yes">あり</span>`:v==='なし'?`<span class="badge badge-no">なし</span>`:v;
+      return `<td>${v}</td>`;
+    }).join('')}</tr>`
+  ).join('');
+  const tot=filtered.length,pgs=Math.ceil(tot/PG)||1;
+  document.getElementById('t-count').textContent=`${tot.toLocaleString()} 件`;
+  document.getElementById('pg-info').textContent=`${pg} / ${pgs}`;
+  document.getElementById('pg-prev').disabled=pg<=1;
+  document.getElementById('pg-next').disabled=pg>=pgs;
+}
+function changePg(d){pg+=d;renderTable();}
+
+function swTab(tab,el){
+  document.querySelectorAll('.ai-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('t-rep').style.display=tab==='rep'?'block':'none';
+  document.getElementById('t-chat').style.display=tab==='chat'?'block':'none';
+}
+
+function summary(){
+  const n=filtered.length;
+  const d=filtered.filter(r=>{const k=gk(r,'不良の有無');return k&&r[k]==='あり';});
+  const dc={};
+  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())dc[v]=(dc[v]||0)+1;}}));
+  const t5=Object.entries(dc).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const fc={};
+  filtered.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])fc[r[k]]=(fc[r[k]]||0)+1;});
+  return `【データ】総数:${n}件 / 不良あり:${d.length}件(${n>0?((d.length/n)*100).toFixed(1):'—'}%) / フィルター:${JSON.stringify(filters)}\n【不良TOP5】${t5.map((x,i)=>`${i+1}.${x[0]}:${x[1]}件`).join(' ')}\n【工場別】${Object.entries(fc).map(([k,v])=>`${k}:${v}件`).join(' ')}`;
+}
+
+async function genReport(){
+  const btn=document.getElementById('rep-btn');
+  const out=document.getElementById('rep-out');
+  btn.disabled=true;btn.textContent='✦  分析中...';
+  out.style.display='block';out.textContent='';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        messages:[{role:'user',content:`品質管理専門家として不良率データを日本語で分析してください。\n${summary()}\n\n1.全体サマリー 2.問題不良項目TOP3と原因仮説 3.工場・仕入先別課題 4.月別トレンド 5.優先改善アクション3点 を具体的数値込みで。`}]})
+    });
+    const d=await res.json();
+    out.textContent=d.content?.[0]?.text||'エラーが発生しました';
+  }catch(e){out.textContent='AI分析に失敗しました。';}
+  btn.disabled=false;btn.innerHTML='✦ &nbsp;再分析する';
+}
+
+async function sendChat(){
+  const inp=document.getElementById('chat-inp');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addMsg('user',msg);
+  const tid=addTyping();
+  document.getElementById('chat-send').disabled=true;
+  history.push({role:'user',content:msg});
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`品質管理専門家AIです。以下データに基づき簡潔に答えてください。\n${summary()}`,
+        messages:history})
+    });
+    const d=await res.json();
+    const rep=d.content?.[0]?.text||'エラーが発生しました';
+    rmTyping(tid);addMsg('ai',rep);
+    history.push({role:'assistant',content:rep});
+    if(history.length>20)history=history.slice(-20);
+  }catch(e){rmTyping(tid);addMsg('ai','エラーが発生しました。');}
+  document.getElementById('chat-send').disabled=false;
+}
+
+function useSug(el){document.getElementById('chat-inp').value=el.textContent;sendChat();}
+
+function addMsg(role,text){
+  const m=document.getElementById('chat-msgs');
+  const d=document.createElement('div');
+  d.className=`cmsg ${role}`;
+  d.innerHTML=`<div class="cavatar">${role==='ai'?'✦':'·'}</div><div class="cbubble">${text.replace(/\n/g,'<br>')}</div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;return d;
+}
+function addTyping(){
+  const m=document.getElementById('chat-msgs');
+  const id='ty-'+Date.now();
+  const d=document.createElement('div');d.className='cmsg ai';d.id=id;
+  d.innerHTML=`<div class="cavatar">✦</div><div class="cbubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  m.appendChild(d);m.scrollTop=m.scrollHeight;return id;
+}
+function rmTyping(id){document.getElementById(id)?.remove();}
+</script>
+</body>
+</html>
