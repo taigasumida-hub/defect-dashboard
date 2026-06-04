@@ -578,7 +578,7 @@ function gk(row,kw){return Object.keys(row).find(k=>k.includes(kw));}
 
 function updateKPI(){
   const n=filtered.length;
-  const defR=filtered.filter(r=>{const k=gk(r,'不良の有無');return k&&r[k]==='あり';});
+  const defR=filtered.filter(r=>{const k=gk(r,'不備の有無')||gk(r,'不良の有無');return k&&r[k]==='あり';});
   let qty=0;
   filtered.forEach(row=>{Object.keys(row).forEach(k=>{if(k.match(/数量/)){const v=parseInt(row[k])||0;qty+=v;}});});
   const facs=new Set(filtered.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
@@ -608,12 +608,12 @@ function mkChart(id,type,labels,datasets,opts={}){
 function renderCharts(){
   // rank
   const rc={};
-  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())rc[v]=(rc[v]||0)+1;}}));
+  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不備項目')||k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())rc[v]=(rc[v]||0)+1;}}));
   const rs=Object.entries(rc).sort((a,b)=>b[1]-a[1]).slice(0,10);
   mkChart('c-rank','bar',rs.map(x=>x[0]),[{data:rs.map(x=>x[1]),backgroundColor:PAL,borderRadius:6,borderSkipped:false}]);
   // pie
   const pc={};
-  filtered.forEach(r=>{const k=gk(r,'不良項目①');if(k){const v=r[k];if(v&&v!=='なし'&&v.trim())pc[v]=(pc[v]||0)+1;}});
+  filtered.forEach(r=>{const k=gk(r,'不備項目①')||gk(r,'不良項目①');if(k){const v=r[k];if(v&&v!=='なし'&&v.trim())pc[v]=(pc[v]||0)+1;}});
   const ps=Object.entries(pc).sort((a,b)=>b[1]-a[1]).slice(0,8);
   mkChart('c-pie','doughnut',ps.map(x=>x[0]),[{data:ps.map(x=>x[1]),backgroundColor:PAL,borderWidth:0,hoverOffset:6}],{legend:true,cutout:'62%'});
   // trend
@@ -636,7 +636,7 @@ function renderTable(){
   document.getElementById('t-body').innerHTML=sl.map(r=>
     `<tr>${cols.map(c=>{
       let v=r[c]||'';
-      if(c.includes('不良の有無'))v=v==='あり'?`<span class="badge badge-yes">あり</span>`:v==='なし'?`<span class="badge badge-no">なし</span>`:v;
+      if(c.includes('不備の有無')||c.includes('不良の有無'))v=v==='あり'?`<span class="badge badge-yes">あり</span>`:v==='なし'?`<span class="badge badge-no">なし</span>`:v;
       return `<td>${v}</td>`;
     }).join('')}</tr>`
   ).join('');
@@ -657,9 +657,9 @@ function swTab(tab,el){
 
 function summary(){
   const n=filtered.length;
-  const d=filtered.filter(r=>{const k=gk(r,'不良の有無');return k&&r[k]==='あり';});
+  const d=filtered.filter(r=>{const k=gk(r,'不備の有無')||gk(r,'不良の有無');return k&&r[k]==='あり';});
   const dc={};
-  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())dc[v]=(dc[v]||0)+1;}}));
+  filtered.forEach(r=>Object.keys(r).forEach(k=>{if(k.includes('不備項目')||k.includes('不良項目')){const v=r[k];if(v&&v!=='なし'&&v.trim())dc[v]=(dc[v]||0)+1;}}));
   const t5=Object.entries(dc).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const fc={};
   filtered.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])fc[r[k]]=(fc[r[k]]||0)+1;});
