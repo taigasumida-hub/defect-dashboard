@@ -10,36 +10,31 @@
 <style>
 :root{
   --navy:#0d1b35;--navy2:#111e3a;--navy3:#1a2952;--navy4:#1f3266;
-  --sky:#aec8e8;--sky2:#c8dcf0;
-  --gold:#c9a96e;--gold2:#e2c99a;
-  --rose:#e8b4c0;--teal:#7cc8c8;--purple:#a8b4e8;
+  --sky:#aec8e8;--sky2:#c8dcf0;--gold:#c9a96e;--gold2:#e2c99a;
+  --rose:#e8b4c0;--teal:#7cc8c8;--purple:#a8b4e8;--green:#90c8a0;
   --text:#f0f4f8;--text2:#a8bcd0;--text3:#5878a0;
   --border:rgba(174,200,232,0.1);--border2:rgba(174,200,232,0.2);--border3:rgba(174,200,232,0.35);
-  --card:rgba(17,30,58,0.8);--card2:rgba(26,41,82,0.6);
+  --card:rgba(17,30,58,0.85);--card2:rgba(26,41,82,0.6);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',sans-serif;min-height:100vh;overflow-x:hidden;
   background-image:radial-gradient(ellipse 70% 50% at 15% 0%,rgba(100,140,210,0.07) 0%,transparent 55%),radial-gradient(ellipse 60% 60% at 85% 90%,rgba(201,169,110,0.04) 0%,transparent 55%);}
 
-/* PASSWORD */
+/* ===== PASSWORD ===== */
 #pw-screen{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:9999;}
-.pw-wrap{text-align:center;max-width:380px;width:90%;}
+.pw-wrap{text-align:center;max-width:400px;width:90%;}
 .pw-brand{font-size:10px;letter-spacing:6px;color:var(--text3);text-transform:uppercase;margin-bottom:32px;}
 .pw-title{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold2);letter-spacing:4px;line-height:1.2;margin-bottom:6px;}
 .pw-sub{font-size:10px;color:var(--text3);letter-spacing:4px;margin-bottom:48px;text-transform:uppercase;}
-.pw-box{background:rgba(17,30,58,0.9);border:1px solid var(--border2);border-radius:24px;padding:44px 40px;}
+.pw-box{background:rgba(17,30,58,0.95);border:1px solid var(--border2);border-radius:24px;padding:44px 40px;}
 .pw-label{font-size:10px;letter-spacing:4px;color:var(--text3);margin-bottom:14px;text-transform:uppercase;}
 .pw-input{width:100%;padding:15px 20px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:14px;color:var(--text);font-size:22px;letter-spacing:10px;text-align:center;outline:none;transition:all .3s;font-family:'Cormorant Garamond',serif;}
 .pw-input:focus{border-color:var(--sky);}
 .pw-btn{width:100%;margin-top:16px;padding:15px;background:linear-gradient(135deg,rgba(31,50,102,0.8),rgba(26,41,82,0.8));border:1px solid var(--border3);border-radius:14px;color:var(--sky2);font-size:12px;letter-spacing:4px;cursor:pointer;transition:all .3s;text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;}
 .pw-btn:hover{border-color:var(--sky);color:var(--text);}
-.pw-line{display:flex;align-items:center;gap:16px;margin-top:32px;opacity:.4;}
-.pw-line::before,.pw-line::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
-.pw-line::after{background:linear-gradient(270deg,transparent,var(--gold));}
-.pw-line span{font-size:10px;letter-spacing:2px;color:var(--gold);}
-.pw-error{color:var(--rose);font-size:12px;margin-top:14px;letter-spacing:1px;display:none;}
+.pw-error{color:var(--rose);font-size:12px;margin-top:14px;display:none;}
 
-/* LOADING */
+/* ===== LOADING ===== */
 #loading{position:fixed;inset:0;background:var(--navy);z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
 .ld-logo{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold);letter-spacing:6px;animation:ldp 2s ease infinite;}
 @keyframes ldp{0%,100%{opacity:.4}50%{opacity:1}}
@@ -48,7 +43,7 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
 @keyframes ldf{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .ld-text{font-size:10px;letter-spacing:4px;color:var(--text3);text-transform:uppercase;}
 
-/* HEADER */
+/* ===== HEADER ===== */
 #app{display:none;}
 .header{background:rgba(10,20,42,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(24px);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .hd-left{display:flex;align-items:center;gap:18px;}
@@ -56,57 +51,54 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
 .hd-sep{width:1px;height:20px;background:var(--border2);}
 .hd-title{font-size:13px;color:var(--text3);letter-spacing:1px;}
 .hd-chip{background:rgba(174,200,232,0.06);border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:10px;color:var(--text3);letter-spacing:1px;}
-.hd-right{display:flex;align-items:center;gap:14px;}
+.hd-right{display:flex;align-items:center;gap:12px;}
 .live-wrap{display:flex;align-items:center;gap:7px;}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:livep 2.5s infinite;}
 @keyframes livep{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(124,200,200,0.4)}50%{opacity:.5;box-shadow:0 0 0 4px rgba(124,200,200,0)}}
 .live-txt{font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;}
-.hd-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);padding:7px 16px;font-size:11px;cursor:pointer;transition:all .3s;letter-spacing:1px;font-family:'Zen Kaku Gothic New',sans-serif;}
+.hd-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);padding:7px 14px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;}
 .hd-btn:hover{border-color:var(--sky);color:var(--sky2);}
-.pdf-btn{background:linear-gradient(135deg,rgba(201,169,110,0.15),rgba(201,169,110,0.08));border:1px solid rgba(201,169,110,0.3);border-radius:8px;color:var(--gold2);padding:7px 18px;font-size:11px;cursor:pointer;transition:all .3s;letter-spacing:1px;font-family:'Zen Kaku Gothic New',sans-serif;display:flex;align-items:center;gap:6px;}
-.pdf-btn:hover{border-color:var(--gold);color:var(--gold3);}
+.pdf-btn{background:linear-gradient(135deg,rgba(201,169,110,0.15),rgba(201,169,110,0.08));border:1px solid rgba(201,169,110,0.3);border-radius:8px;color:var(--gold2);padding:7px 16px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;display:flex;align-items:center;gap:6px;}
+.pdf-btn:hover{border-color:var(--gold);color:var(--gold2);}
 
-/* LAYOUT */
+/* ===== LAYOUT ===== */
 .main{padding:32px 40px;max-width:1600px;margin:0 auto;}
 .sec{margin-bottom:32px;}
 .sec-hd{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
 .sec-hd-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent);}
 .sec-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;white-space:nowrap;}
 
-/* KPI */
+/* ===== KPI ===== */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px;position:relative;overflow:hidden;transition:border-color .3s,transform .2s;}
+.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:22px 24px;position:relative;overflow:hidden;transition:all .3s;}
 .kpi-card:hover{border-color:var(--border2);transform:translateY(-2px);}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--kc,var(--sky)),transparent);}
 .kpi-card::after{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,var(--kc,var(--sky)) 0%,transparent 70%);opacity:.05;}
 .kpi-lbl{font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:12px;}
 .kpi-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1;color:var(--text);}
-.kpi-sub{font-size:10px;color:var(--text3);margin-top:10px;letter-spacing:.5px;}
+.kpi-sub{font-size:10px;color:var(--text3);margin-top:10px;}
 
-/* 内訳パネル */
-.breakdown-bar{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+/* 内訳 */
+.breakdown-bar{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:none;}
 .breakdown-btn{background:rgba(174,200,232,0.06);border:1px solid var(--border2);border-radius:10px;color:var(--sky2);padding:8px 18px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;letter-spacing:1px;display:flex;align-items:center;gap:8px;}
 .breakdown-btn:hover{background:rgba(174,200,232,0.1);border-color:var(--sky);}
-.breakdown-hint{font-size:10px;color:var(--text3);letter-spacing:1px;}
-.breakdown-panel{margin-top:0;max-height:0;overflow:hidden;transition:max-height .4s ease,margin-top .3s ease;background:var(--card2);border-radius:14px;}
-.breakdown-panel.open{max-height:600px;margin-top:16px;}
-.breakdown-inner{padding:20px 24px;}
-.breakdown-title{font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:16px;}
-.breakdown-table{width:100%;border-collapse:collapse;font-size:12px;}
-.breakdown-table th{padding:8px 14px;text-align:left;font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border);}
-.breakdown-table td{padding:9px 14px;color:var(--text2);border-bottom:1px solid rgba(174,200,232,0.04);}
-.breakdown-table tr:hover td{background:rgba(174,200,232,0.03);}
-.bd-highlight{color:var(--sky2);font-weight:500;}
-.bd-total{color:var(--gold2);}
-.bd-all{color:var(--text3);}
+.breakdown-hint{font-size:10px;color:var(--text3);}
+.breakdown-panel{max-height:0;overflow:hidden;transition:max-height .4s ease,margin-top .3s ease;}
+.breakdown-panel.open{max-height:800px;margin-top:16px;}
+.breakdown-inner{background:var(--card2);border-radius:14px;padding:20px 24px;}
+.bd-title{font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:14px;}
+.bd-table{width:100%;border-collapse:collapse;font-size:12px;}
+.bd-table th{padding:8px 14px;text-align:left;font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;border-bottom:1px solid var(--border);}
+.bd-table td{padding:9px 14px;color:var(--text2);border-bottom:1px solid rgba(174,200,232,0.04);}
+.bd-table tr:last-child td{border-bottom:none;}
+.bd-hl{color:var(--sky2)!important;}
+.bd-total{color:var(--gold2)!important;font-weight:500;}
+.bd-all{color:var(--text3)!important;}
 .bd-bar-wrap{display:flex;align-items:center;gap:8px;}
 .bd-bar-bg{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;max-width:80px;}
-.bd-bar-fill{height:100%;background:var(--sky);border-radius:2px;transition:width .5s ease;}
-.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:9px;letter-spacing:1px;text-transform:uppercase;}
-.b-yes{background:rgba(232,180,192,0.1);color:var(--rose);border:1px solid rgba(232,180,192,0.2);}
-.b-no{background:rgba(124,200,200,0.08);color:var(--teal);border:1px solid rgba(124,200,200,0.15);}
+.bd-bar-fill{height:100%;background:var(--sky);border-radius:2px;}
 
-/* FILTER */
+/* ===== CALENDAR ===== */
 .filter-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px 28px;}
 .filter-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .filter-top-label{font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
@@ -116,21 +108,36 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
 .btn-clear{background:transparent;border:1px solid var(--border);border-radius:10px;color:var(--text3);padding:8px 16px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;}
 .btn-clear:hover{border-color:var(--rose);color:var(--rose);}
 
-/* 期間 - カスタムカレンダー */
-.period-wrap{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.period-section{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
 .period-lbl{font-size:9px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
-.period-selectors{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.p-sel-group{display:flex;align-items:center;gap:6px;}
-.p-sel{background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:8px;color:var(--text2);padding:8px 10px;font-size:12px;outline:none;cursor:pointer;transition:border-color .3s;font-family:'Zen Kaku Gothic New',sans-serif;-webkit-appearance:none;text-align:center;}
-.p-sel:focus{border-color:var(--sky);}
-.p-sel option{background:var(--navy2);}
-.p-sel.yr{width:88px;}
-.p-sel.mo{width:64px;}
-.p-sel.dy{width:64px;}
-.p-sep{color:var(--text3);font-size:18px;opacity:.6;}
-.p-arrow{color:var(--text3);font-size:14px;padding:0 6px;}
-.p-clr{background:transparent;border:none;color:var(--text3);font-size:10px;cursor:pointer;letter-spacing:1px;padding:4px 8px;border-radius:6px;transition:color .2s;font-family:'Zen Kaku Gothic New',sans-serif;}
-.p-clr:hover{color:var(--rose);}
+.cal-range{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.cal-input-wrap{position:relative;}
+.cal-input-btn{background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:10px;color:var(--text2);padding:9px 16px;font-size:13px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;min-width:130px;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none;}
+.cal-input-btn:hover,.cal-input-btn.active{border-color:var(--sky);}
+.cal-input-btn.has-val{border-color:rgba(174,200,232,0.3);color:var(--sky2);}
+.cal-icon{font-size:14px;opacity:.6;}
+.cal-popup{position:absolute;top:calc(100%+8px);left:0;z-index:400;background:var(--navy2);border:1px solid var(--border2);border-radius:14px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,0.5);display:none;min-width:260px;}
+.cal-popup.open{display:block;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cal-nav-btn{background:transparent;border:none;color:var(--text3);cursor:pointer;padding:4px 10px;font-size:16px;border-radius:6px;transition:all .2s;}
+.cal-nav-btn:hover{color:var(--sky);background:rgba(174,200,232,0.06);}
+.cal-month-lbl{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--text);letter-spacing:1px;}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px;}
+.cal-week-day{text-align:center;font-size:9px;letter-spacing:1px;color:var(--text3);padding:4px 0;}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-day{text-align:center;padding:7px 4px;font-size:12px;cursor:pointer;border-radius:8px;color:var(--text2);transition:all .15s;border:1px solid transparent;}
+.cal-day:hover{background:rgba(174,200,232,0.08);color:var(--text);}
+.cal-day.today{color:var(--sky);font-weight:600;}
+.cal-day.selected{background:var(--sky);color:var(--navy)!important;font-weight:700;}
+.cal-day.in-range{background:rgba(174,200,232,0.1);color:var(--sky2);}
+.cal-day.range-start,.cal-day.range-end{background:var(--sky);color:var(--navy)!important;font-weight:700;}
+.cal-day.empty{cursor:default;}
+.cal-day.other-month{opacity:.3;}
+.cal-arrow{color:var(--text3);font-size:20px;opacity:.5;}
+.cal-clear{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.cal-clear-btn{font-size:10px;color:var(--rose);cursor:pointer;letter-spacing:1px;}
+.cal-clear-btn:hover{text-decoration:underline;}
+.cal-today-btn{font-size:10px;color:var(--sky2);cursor:pointer;letter-spacing:1px;}
 
 /* マルチセレクト */
 .filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
@@ -141,7 +148,7 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
   background-repeat:no-repeat;background-position:right 11px center;}
 .ms-btn:hover,.ms-btn.active{border-color:var(--sky2);}
 .ms-btn.has-val{border-color:rgba(174,200,232,0.3);color:var(--sky2);}
-.ms-dd{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:300;background:var(--navy2);border:1px solid var(--border2);border-radius:12px;display:none;box-shadow:0 16px 48px rgba(0,0,0,0.5);overflow:hidden;min-width:200px;}
+.ms-dd{position:absolute;top:calc(100%+6px);left:0;right:0;z-index:300;background:var(--navy2);border:1px solid var(--border2);border-radius:12px;display:none;box-shadow:0 16px 48px rgba(0,0,0,0.5);overflow:hidden;min-width:200px;}
 .ms-dd.open{display:block;}
 .ms-search{width:100%;padding:10px 14px;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:12px;outline:none;font-family:'Zen Kaku Gothic New',sans-serif;}
 .ms-search::placeholder{color:var(--text3);}
@@ -150,20 +157,35 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
 .ms-item:hover{background:rgba(174,200,232,0.06);}
 .ms-item.sel{color:var(--sky2);background:rgba(174,200,232,0.05);}
 .ms-cb{width:14px;height:14px;accent-color:var(--sky);cursor:pointer;flex-shrink:0;}
-.ms-foot{padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.ms-foot{padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;}
 .ms-foot-count{font-size:10px;color:var(--text3);}
 .ms-foot-clear{font-size:10px;color:var(--rose);cursor:pointer;}
-.ms-foot-clear:hover{text-decoration:underline;}
 
-/* タグ */
 .filter-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
 .ftag{background:rgba(174,200,232,0.07);border:1px solid rgba(174,200,232,0.18);border-radius:20px;padding:5px 14px;font-size:11px;color:var(--sky2);display:flex;align-items:center;gap:8px;}
-.ftag-x{cursor:pointer;color:var(--text3);font-size:13px;line-height:1;transition:color .2s;}
+.ftag-x{cursor:pointer;color:var(--text3);font-size:13px;transition:color .2s;}
 .ftag-x:hover{color:var(--rose);}
 
-/* CHARTS */
+/* ===== VIEW TABS ===== */
+.view-tabs{display:flex;gap:0;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:20px;width:fit-content;}
+.view-tab{padding:8px 20px;font-size:11px;letter-spacing:2px;cursor:pointer;border-radius:9px;color:var(--text3);transition:all .3s;background:none;border:none;font-family:'Zen Kaku Gothic New',sans-serif;text-transform:uppercase;}
+.view-tab.on{background:linear-gradient(135deg,var(--navy3),var(--navy4));color:var(--sky2);border:1px solid var(--border2);}
+
+/* 各数値コントロール */
+.each-controls{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:none;}
+.each-controls.show{display:block;}
+.each-ctrl-title{font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:12px;}
+.each-ctrl-list{display:flex;flex-wrap:wrap;gap:8px;}
+.each-ctrl-item{display:flex;align-items:center;gap:6px;background:rgba(174,200,232,0.04);border:1px solid var(--border);border-radius:20px;padding:5px 14px;cursor:pointer;transition:all .2s;user-select:none;}
+.each-ctrl-item.on{border-color:rgba(174,200,232,0.3);background:rgba(174,200,232,0.08);}
+.each-ctrl-item input{accent-color:var(--sky);cursor:pointer;width:12px;height:12px;}
+.each-ctrl-label{font-size:11px;color:var(--text2);}
+.each-ctrl-item.on .each-ctrl-label{color:var(--sky2);}
+.each-ctrl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ===== CHARTS ===== */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.cc{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;transition:border-color .3s;}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;transition:all .3s;}
 .cc:hover{border-color:var(--border2);}
 .cc.wide{grid-column:1/-1;}
 .cc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
@@ -173,7 +195,7 @@ body{background:var(--navy);color:var(--text);font-family:'Zen Kaku Gothic New',
 .cw{position:relative;height:260px;}
 .cw.tall{height:300px;}
 
-/* TABLE */
+/* ===== TABLE ===== */
 .table-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
 .tc-head{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .tc-title{font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;}
@@ -185,25 +207,47 @@ tbody tr{border-bottom:1px solid rgba(174,200,232,0.04);transition:background .1
 tbody tr:hover{background:rgba(174,200,232,0.03);}
 tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px;overflow:hidden;text-overflow:ellipsis;}
 .tc-foot{padding:14px 28px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);}
-.pg-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);padding:6px 16px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;letter-spacing:1px;}
+.pg-btn{background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text3);padding:6px 16px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;}
 .pg-btn:hover{border-color:var(--sky);color:var(--sky2);}
 .pg-btn:disabled{opacity:.2;cursor:default;}
 .pg-info{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--text3);}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:9px;letter-spacing:1px;text-transform:uppercase;}
+.b-yes{background:rgba(232,180,192,0.1);color:var(--rose);border:1px solid rgba(232,180,192,0.2);}
+.b-no{background:rgba(124,200,200,0.08);color:var(--teal);border:1px solid rgba(124,200,200,0.15);}
 
-/* AI */
+/* ===== AI ===== */
 .ai-card{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;}
 .ai-top{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;}
-.ai-icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--navy3),var(--navy4));border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--sky2);flex-shrink:0;}
+.ai-icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1a3a2a,#1a4a1a);border:1px solid rgba(100,200,100,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ai-top-info{flex:1;}
 .ai-top-ttl{font-size:14px;font-weight:500;}
 .ai-top-sub{font-size:10px;color:var(--text3);letter-spacing:1px;margin-top:2px;}
+.api-key-row{display:flex;align-items:center;gap:10px;padding:16px 28px;border-bottom:1px solid var(--border);background:rgba(100,200,100,0.03);}
+.api-key-lbl{font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+.api-key-input{flex:1;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:8px;color:var(--text2);padding:8px 14px;font-size:12px;outline:none;transition:border-color .3s;font-family:monospace;letter-spacing:1px;}
+.api-key-input:focus{border-color:rgba(100,200,100,0.4);}
+.api-key-input::placeholder{color:var(--text3);letter-spacing:0;}
+.api-save-btn{background:rgba(100,200,100,0.1);border:1px solid rgba(100,200,100,0.25);border-radius:8px;color:#7cc87c;padding:8px 16px;font-size:11px;cursor:pointer;transition:all .3s;font-family:'Zen Kaku Gothic New',sans-serif;white-space:nowrap;}
+.api-save-btn:hover{background:rgba(100,200,100,0.18);border-color:rgba(100,200,100,0.4);}
+.api-status{font-size:10px;padding:4px 10px;border-radius:10px;white-space:nowrap;}
+.api-status.ok{color:#7cc87c;background:rgba(100,200,100,0.1);}
+.api-status.ng{color:var(--rose);background:rgba(232,180,192,0.1);}
 .ai-tabs{display:flex;border-bottom:1px solid var(--border);}
 .ai-tab{padding:13px 24px;font-size:10px;letter-spacing:2px;cursor:pointer;border-bottom:2px solid transparent;color:var(--text3);transition:all .3s;background:none;border-top:none;border-left:none;border-right:none;text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;}
 .ai-tab.on{color:var(--sky2);border-bottom-color:var(--sky);}
 .ai-body{padding:28px;}
-.rep-btn{background:rgba(174,200,232,0.05);border:1px solid var(--border2);border-radius:12px;color:var(--sky2);padding:12px 24px;font-size:11px;letter-spacing:2px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:all .3s;text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;}
-.rep-btn:hover{background:rgba(174,200,232,0.09);border-color:var(--sky);}
+.rep-btn{background:rgba(100,200,100,0.08);border:1px solid rgba(100,200,100,0.2);border-radius:12px;color:#7cc87c;padding:12px 24px;font-size:11px;letter-spacing:2px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:all .3s;text-transform:uppercase;font-family:'Zen Kaku Gothic New',sans-serif;}
+.rep-btn:hover{background:rgba(100,200,100,0.14);border-color:rgba(100,200,100,0.4);}
 .rep-btn:disabled{opacity:.35;cursor:default;}
 .rep-out{margin-top:20px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;padding:22px;font-size:13px;line-height:1.9;color:var(--text2);white-space:pre-wrap;display:none;}
+
+/* コメント欄 */
+.comment-section{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.comment-lbl{font-size:9px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin-bottom:10px;}
+.comment-input{width:100%;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:12px;color:var(--text2);padding:14px 16px;font-size:13px;outline:none;resize:vertical;min-height:100px;transition:border-color .3s;font-family:'Zen Kaku Gothic New',sans-serif;line-height:1.7;}
+.comment-input:focus{border-color:var(--sky);}
+.comment-input::placeholder{color:var(--text3);}
+
 .chat-msgs{height:280px;overflow-y:auto;background:rgba(255,255,255,0.015);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;margin-bottom:12px;}
 .cmsg{display:flex;gap:10px;}
 .cmsg.user{flex-direction:row-reverse;}
@@ -224,33 +268,35 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
 .typing span{width:5px;height:5px;background:var(--text3);border-radius:50%;animation:ty .9s infinite;}
 .typing span:nth-child(2){animation-delay:.18s;}.typing span:nth-child(3){animation-delay:.36s;}
 @keyframes ty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
-/* PDF PRINT */
+/* ===== PDF PRINT ===== */
 @media print{
-  #pw-screen,#loading,.header .hd-btn,.pdf-btn,.hd-btn,.btn-apply,.btn-clear,.filter-actions,.pg-btn,.chat-row,.suggs,.ai-tabs,.rep-btn,.breakdown-btn,.ms-btn,.filter-top,.period-wrap,.filter-grid,.filter-tags{display:none!important;}
+  #pw-screen,#loading,.hd-btn,.pdf-btn,.filter-actions,.btn-apply,.btn-clear,.pg-btn,.chat-row,.suggs,.ai-tabs,.rep-btn,.breakdown-btn,.ms-btn,.fg-lbl,.filter-top,.filter-grid,.filter-tags,.period-section,.each-controls,.view-tabs,.api-key-row{display:none!important;}
   body{background:#fff!important;color:#111!important;}
   .main{padding:16px!important;}
-  .kpi-card,.filter-card,.cc,.table-card,.ai-card,.breakdown-panel{background:#f8f9fa!important;border:1px solid #ddd!important;border-radius:8px!important;}
+  .kpi-card,.filter-card,.cc,.table-card,.ai-card,.breakdown-inner{background:#f8f9fa!important;border:1px solid #ddd!important;border-radius:8px!important;}
   .kpi-val,.tc-count{color:#111!important;}
   .kpi-lbl,.kpi-sub,.cc-title,.tc-title,.sec-label{color:#555!important;}
   .breakdown-panel{max-height:none!important;display:block!important;}
-  .breakdown-inner{display:block!important;}
   .header{position:static!important;background:#fff!important;border-bottom:2px solid #ddd!important;}
   .hd-logo,.hd-title{color:#111!important;}
   .pdf-header{display:block!important;}
-  table thead th{background:#eee!important;color:#555!important;}
+  .comment-input{border:1px solid #ddd!important;color:#333!important;background:#fff!important;}
+  thead th{background:#eee!important;color:#555!important;}
   tbody td{color:#333!important;}
   .cc{page-break-inside:avoid;}
+  .rep-out{display:block!important;border:1px solid #ddd!important;color:#333!important;background:#fff!important;}
 }
 .pdf-header{display:none;padding:12px 0 20px;border-bottom:2px solid #ddd;margin-bottom:20px;}
 .pdf-header h1{font-size:20px;color:#111;margin-bottom:4px;}
-.pdf-header p{font-size:12px;color:#666;}
+.pdf-header p{font-size:12px;color:#666;margin-top:4px;}
 
 @media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.charts-grid{grid-template-columns:1fr;}.cc.wide{grid-column:1;}}
-@media(max-width:700px){.main{padding:20px 16px;}.header{padding:0 16px;}.kpi-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:700px){.main{padding:20px 16px;}.header{padding:0 16px;}}
 </style>
 </head>
 <body>
@@ -267,7 +313,6 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
       <button class="pw-btn" onclick="checkPw()">Enter</button>
       <div class="pw-error" id="pw-err">パスワードが正しくありません</div>
     </div>
-    <div class="pw-line"><span>✦</span></div>
   </div>
 </div>
 
@@ -295,11 +340,10 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
   </div>
 
   <div class="main">
-    <!-- PDF用ヘッダー（印刷時のみ表示） -->
     <div class="pdf-header" id="pdf-header">
-      <h1>不良率ダッシュボード - 分析レポート</h1>
+      <h1>不良率ダッシュボード — 分析レポート</h1>
       <p id="pdf-date"></p>
-      <p id="pdf-filter-desc" style="margin-top:4px;font-size:11px;color:#888;"></p>
+      <p id="pdf-filter-desc"></p>
     </div>
 
     <!-- KPI -->
@@ -311,20 +355,11 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
         <div class="kpi-card" style="--kc:var(--gold)"><div class="kpi-lbl">不備品数合計</div><div class="kpi-val" id="k-qty">—</div><div class="kpi-sub" id="k-qty-sub">数量合計</div></div>
         <div class="kpi-card" style="--kc:var(--teal)"><div class="kpi-lbl">対象工場数</div><div class="kpi-val" id="k-fac">—</div><div class="kpi-sub" id="k-fac-sub">ユニーク工場</div></div>
       </div>
-
-      <!-- 内訳パネル -->
-      <div class="breakdown-bar" id="breakdown-bar" style="display:none">
-        <div class="breakdown-hint" id="breakdown-hint"></div>
-        <button class="breakdown-btn" id="breakdown-btn" onclick="toggleBreakdown()">
-          <span id="breakdown-btn-icon">▼</span> 内訳を表示
-        </button>
+      <div class="breakdown-bar" id="bd-bar">
+        <div class="breakdown-hint" id="bd-hint"></div>
+        <button class="breakdown-btn" id="bd-btn" onclick="toggleBD()"><span id="bd-icon">▼</span> 内訳を表示</button>
       </div>
-      <div class="breakdown-panel" id="breakdown-panel">
-        <div class="breakdown-inner">
-          <div class="breakdown-title">絞り込み項目 別内訳</div>
-          <div id="breakdown-content"></div>
-        </div>
-      </div>
+      <div class="breakdown-panel" id="bd-panel"><div class="breakdown-inner"><div id="bd-content"></div></div></div>
     </div>
 
     <!-- FILTERS -->
@@ -338,34 +373,47 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
             <button class="btn-apply" onclick="applyFilters()">✦ 絞り込む</button>
           </div>
         </div>
-
-        <!-- 期間フィルター（年月日プルダウン） -->
-        <div class="period-wrap">
+        <!-- カスタムカレンダー -->
+        <div class="period-section">
           <div class="period-lbl">期間</div>
-          <div class="period-selectors">
-            <div class="p-sel-group">
-              <select class="p-sel yr" id="p-from-y"><option value="">年</option></select>
-              <select class="p-sel mo" id="p-from-m"><option value="">月</option></select>
-              <select class="p-sel dy" id="p-from-d"><option value="">日</option></select>
+          <div class="cal-range">
+            <div class="cal-input-wrap">
+              <div class="cal-input-btn" id="cal-from-btn" onclick="toggleCal('from')">
+                <span id="cal-from-lbl">開始日を選択</span><span class="cal-icon">📅</span>
+              </div>
+              <div class="cal-popup" id="cal-from-popup"></div>
             </div>
-            <div class="p-arrow">→</div>
-            <div class="p-sel-group">
-              <select class="p-sel yr" id="p-to-y"><option value="">年</option></select>
-              <select class="p-sel mo" id="p-to-m"><option value="">月</option></select>
-              <select class="p-sel dy" id="p-to-d"><option value="">日</option></select>
+            <div class="cal-arrow">→</div>
+            <div class="cal-input-wrap">
+              <div class="cal-input-btn" id="cal-to-btn" onclick="toggleCal('to')">
+                <span id="cal-to-lbl">終了日を選択</span><span class="cal-icon">📅</span>
+              </div>
+              <div class="cal-popup" id="cal-to-popup"></div>
             </div>
-            <button class="p-clr" onclick="clearPeriod()">クリア</button>
           </div>
         </div>
-
         <div class="filter-grid" id="filter-grid"></div>
         <div class="filter-tags" id="filter-tags"></div>
       </div>
     </div>
 
-    <!-- CHARTS -->
+    <!-- ANALYTICS -->
     <div class="sec">
       <div class="sec-hd"><div class="sec-label">Analytics</div><div class="sec-hd-line"></div></div>
+
+      <!-- 表示タブ -->
+      <div class="view-tabs">
+        <button class="view-tab on" onclick="switchView('all',this)">全体</button>
+        <button class="view-tab" onclick="switchView('total',this)">合計値</button>
+        <button class="view-tab" onclick="switchView('each',this)">各数値</button>
+      </div>
+
+      <!-- 各数値コントロール -->
+      <div class="each-controls" id="each-controls">
+        <div class="each-ctrl-title">表示する項目を選択</div>
+        <div class="each-ctrl-list" id="each-ctrl-list"></div>
+      </div>
+
       <div class="charts-grid">
         <div class="cc"><div class="cc-head"><div class="cc-title"><div class="cc-pip" style="background:var(--sky)"></div>不備項目ランキング</div><div class="cc-badge" id="badge-rank">全体</div></div><div class="cw"><canvas id="c-rank"></canvas></div></div>
         <div class="cc"><div class="cc-head"><div class="cc-title"><div class="cc-pip" style="background:var(--rose)"></div>不備カテゴリ構成</div><div class="cc-badge" id="badge-pie">全体</div></div><div class="cw"><canvas id="c-pie"></canvas></div></div>
@@ -394,7 +442,17 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
       <div class="ai-card">
         <div class="ai-top">
           <div class="ai-icon">✦</div>
-          <div><div class="ai-top-ttl">AI アシスタント</div><div class="ai-top-sub">データに基づいた分析・質問応答</div></div>
+          <div class="ai-top-info">
+            <div class="ai-top-ttl">Gemini AI アシスタント</div>
+            <div class="ai-top-sub">Google Gemini API による分析・チャット</div>
+          </div>
+        </div>
+        <!-- APIキー入力 -->
+        <div class="api-key-row">
+          <div class="api-key-lbl">Gemini API Key</div>
+          <input class="api-key-input" type="password" id="api-key-input" placeholder="AIza... (Google AI Studio から取得)"/>
+          <button class="api-save-btn" onclick="saveApiKey()">保存</button>
+          <div class="api-status" id="api-status"></div>
         </div>
         <div class="ai-tabs">
           <button class="ai-tab on" onclick="swTab('rep',this)">自動分析レポート</button>
@@ -404,6 +462,11 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
           <div id="t-rep">
             <button class="rep-btn" id="rep-btn" onclick="genReport()">✦ &nbsp;現在のデータを分析する</button>
             <div class="rep-out" id="rep-out"></div>
+            <!-- コメント欄 -->
+            <div class="comment-section">
+              <div class="comment-lbl">報告コメント（PDF出力時に含まれます）</div>
+              <textarea class="comment-input" id="comment-input" placeholder="上長への報告コメントをここに入力してください...&#10;例：今月のシンコウ上海における汚れ不備が前月比150%増加しており、早急な対応が必要です。"></textarea>
+            </div>
           </div>
           <div id="t-chat" style="display:none">
             <div class="suggs">
@@ -413,7 +476,7 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
               <button class="sug" onclick="useSug(this)">月別トレンドを教えて</button>
             </div>
             <div class="chat-msgs" id="chat-msgs">
-              <div class="cmsg ai"><div class="cav">✦</div><div class="cbub">こんにちは。不備率データについて何でも聞いてください。</div></div>
+              <div class="cmsg ai"><div class="cav">✦</div><div class="cbub">こんにちは！Gemini APIキーを入力して保存すると、不備率データについての分析や質問に答えられます。</div></div>
             </div>
             <div class="chat-row">
               <input class="chat-inp" id="chat-inp" placeholder="例：シンコウ上海の傾向を教えて" onkeydown="if(event.key==='Enter')sendChat()"/>
@@ -430,9 +493,13 @@ tbody td{padding:10px 16px;color:var(--text2);white-space:nowrap;max-width:180px
 const SHEET='1ueCaG5BejSItYP8xaSBz_Vxl89ld6J06fTOpNqKChYg',GID='1958561503';
 const CSV=`https://docs.google.com/spreadsheets/d/${SHEET}/export?format=csv&gid=${GID}`;
 const PW='kakurega7125';
+const PAL=['#aec8e8','#e8b4c0','#c9a96e','#7cc8c8','#c8a8e0','#90c8a0','#e8c870','#b8d8f0','#f0b8b0','#a8c8d8','#d0b8e8','#a8d0b8'];
 
 let allData=[],filtered=[],pg=1,PG=20,CH={},chatHist=[],pending={},filterDefs=[];
-let bdOpen=false;
+let bdOpen=false,currentView='all',eachVisible={};
+let calFromDate=null,calToDate=null;
+let calFromYear,calFromMonth,calToYear,calToMonth;
+let geminiKey='';
 
 // ── PASSWORD ──
 document.getElementById('pw-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPw();});
@@ -454,7 +521,7 @@ async function loadData(){
     const r=await fetch(CSV);const t=await r.text();
     const p=Papa.parse(t,{header:true,skipEmptyLines:true});
     allData=p.data;filtered=[...allData];
-    buildPeriodSelectors();buildFilters();applyFilters();
+    buildFilters();applyFilters();
     document.getElementById('hd-chip').textContent=new Date().toLocaleString('ja-JP');
     document.getElementById('loading').style.display='none';
   }catch(e){
@@ -467,54 +534,117 @@ function reloadData(){document.getElementById('loading').style.display='flex';lo
 function gk(row,kw){return Object.keys(row).find(k=>k.includes(kw));}
 function defectCols(){return allData.length?Object.keys(allData[0]).filter(k=>k.includes('不備項目')||k.includes('不良項目')):[];}
 function defectVals(row){return defectCols().map(k=>row[k]).filter(v=>v&&v.trim()&&v!=='なし');}
-function rowDateStr(row){const k=gk(row,'報告月');return k?(row[k]||''):'';} // e.g. "2026/03/30"
-function parseDate(s){if(!s)return null;const p=s.replace(/\//g,'-').split('-');return{y:p[0]||'',m:p[1]||'',d:p[2]||''};}
+function rowDateStr(row){const k=gk(row,'報告月');return k?(row[k]||''):'';} 
+function defK(row){const k=gk(row,'不備の有無')||gk(row,'不良の有無');return k&&row[k]==='あり';}
+function sumQty(data){let q=0;data.forEach(r=>Object.keys(r).forEach(k=>{if(k.match(/数量/))q+=parseInt(r[k])||0;}));return q;}
+function s(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+function toDateObj(str){if(!str)return null;const p=str.replace(/\//g,'-').split('-');return new Date(p[0],parseInt(p[1])-1,parseInt(p[2]||1));}
+function fmtDate(d){if(!d)return null;return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function fmtDateJP(d){if(!d)return null;return`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;}
 
-// ── PERIOD SELECTORS ──
-function buildPeriodSelectors(){
-  // データから年・月・日の選択肢を生成
-  const dates=allData.map(r=>rowDateStr(r)).filter(Boolean);
-  const years=[...new Set(dates.map(d=>d.slice(0,4)))].sort();
-  const months=[...Array(12)].map((_,i)=>String(i+1).padStart(2,'0'));
-  const days=[...Array(31)].map((_,i)=>String(i+1).padStart(2,'0'));
+// ── CUSTOM CALENDAR ──
+const CAL_WEEKS=['日','月','火','水','木','金','土'];
+let calActiveTarget=null;
 
-  ['p-from-y','p-to-y'].forEach(id=>{
-    const sel=document.getElementById(id);
-    years.forEach(y=>{const o=new Option(y+'年',y);sel.appendChild(o);});
+function toggleCal(target){
+  const popup=document.getElementById(`cal-${target}-popup`);
+  const isOpen=popup.classList.contains('open');
+  closeAllCals();
+  if(!isOpen){
+    calActiveTarget=target;
+    const now=target==='from'?(calFromDate||new Date()):( calToDate||new Date());
+    if(target==='from'){calFromYear=now.getFullYear();calFromMonth=now.getMonth();}
+    else{calToYear=now.getFullYear();calToMonth=now.getMonth();}
+    renderCal(target);
+    popup.classList.add('open');
+    document.getElementById(`cal-${target}-btn`).classList.add('active');
+  }
+}
+function closeAllCals(){
+  ['from','to'].forEach(t=>{
+    document.getElementById(`cal-${t}-popup`)?.classList.remove('open');
+    document.getElementById(`cal-${t}-btn`)?.classList.remove('active');
   });
-  ['p-from-m','p-to-m'].forEach(id=>{
-    const sel=document.getElementById(id);
-    months.forEach(m=>{const o=new Option(m+'月',m);sel.appendChild(o);});
-  });
-  ['p-from-d','p-to-d'].forEach(id=>{
-    const sel=document.getElementById(id);
-    days.forEach(d=>{const o=new Option(d+'日',d);sel.appendChild(o);});
-  });
+  calActiveTarget=null;
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.cal-input-wrap'))closeAllCals();
+});
+
+function renderCal(target){
+  const popup=document.getElementById(`cal-${target}-popup`);
+  const yr=target==='from'?calFromYear:calToYear;
+  const mo=target==='from'?calFromMonth:calToMonth;
+  const now=new Date();
+  const firstDay=new Date(yr,mo,1).getDay();
+  const daysInMonth=new Date(yr,mo+1,0).getDate();
+
+  let days='';
+  for(let i=0;i<firstDay;i++)days+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(yr,mo,d);
+    const dateStr=fmtDate(date);
+    let cls='cal-day';
+    if(fmtDate(now)===dateStr)cls+=' today';
+    if(calFromDate&&fmtDate(calFromDate)===dateStr)cls+=' range-start selected';
+    if(calToDate&&fmtDate(calToDate)===dateStr)cls+=' range-end selected';
+    if(calFromDate&&calToDate&&date>calFromDate&&date<calToDate)cls+=' in-range';
+    days+=`<div class="${cls}" onclick="selectDay('${target}',${yr},${mo},${d})">${d}</div>`;
+  }
+
+  popup.innerHTML=`
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="navCal('${target}',-1)">‹</button>
+      <div class="cal-month-lbl">${yr}年 ${mo+1}月</div>
+      <button class="cal-nav-btn" onclick="navCal('${target}',1)">›</button>
+    </div>
+    <div class="cal-week">${CAL_WEEKS.map(w=>`<div class="cal-week-day">${w}</div>`).join('')}</div>
+    <div class="cal-days">${days}</div>
+    <div class="cal-clear">
+      <span class="cal-clear-btn" onclick="clearCal('${target}')">クリア</span>
+      <span class="cal-today-btn" onclick="selectDay('${target}',${now.getFullYear()},${now.getMonth()},${now.getDate()})">今日</span>
+    </div>`;
 }
 
-function getDateFrom(){
-  const y=document.getElementById('p-from-y').value;
-  const m=document.getElementById('p-from-m').value;
-  const d=document.getElementById('p-from-d').value;
-  return y?(y+'-'+(m||'01')+'-'+(d||'01')):null;
-}
-function getDateTo(){
-  const y=document.getElementById('p-to-y').value;
-  const m=document.getElementById('p-to-m').value;
-  const d=document.getElementById('p-to-d').value;
-  return y?(y+'-'+(m||'12')+'-'+(d||'31')):null;
-}
-function clearPeriod(){
-  ['p-from-y','p-from-m','p-from-d','p-to-y','p-to-m','p-to-d'].forEach(id=>document.getElementById(id).value='');
+function navCal(target,dir){
+  if(target==='from'){calFromMonth+=dir;if(calFromMonth>11){calFromMonth=0;calFromYear++;}if(calFromMonth<0){calFromMonth=11;calFromYear--;}}
+  else{calToMonth+=dir;if(calToMonth>11){calToMonth=0;calToYear++;}if(calToMonth<0){calToMonth=11;calToYear--;}}
+  renderCal(target);
 }
 
-// ── MULTI-SELECT FILTERS ──
+function selectDay(target,yr,mo,d){
+  const date=new Date(yr,mo,d);
+  if(target==='from'){
+    calFromDate=date;
+    document.getElementById('cal-from-lbl').textContent=fmtDateJP(date);
+    document.getElementById('cal-from-btn').classList.add('has-val');
+    // 終了日が開始日より前なら終了日をクリア
+    if(calToDate&&calToDate<calFromDate){calToDate=null;document.getElementById('cal-to-lbl').textContent='終了日を選択';document.getElementById('cal-to-btn').classList.remove('has-val');}
+    closeAllCals();
+    // 自動で終了日カレンダーを開く
+    calToYear=yr;calToMonth=mo;
+    setTimeout(()=>toggleCal('to'),150);
+  }else{
+    if(calFromDate&&date<calFromDate){alert('終了日は開始日より後にしてください');return;}
+    calToDate=date;
+    document.getElementById('cal-to-lbl').textContent=fmtDateJP(date);
+    document.getElementById('cal-to-btn').classList.add('has-val');
+    closeAllCals();
+  }
+  renderCal(target);
+}
+
+function clearCal(target){
+  if(target==='from'){calFromDate=null;document.getElementById('cal-from-lbl').textContent='開始日を選択';document.getElementById('cal-from-btn').classList.remove('has-val');}
+  else{calToDate=null;document.getElementById('cal-to-lbl').textContent='終了日を選択';document.getElementById('cal-to-btn').classList.remove('has-val');}
+}
+
+// ── MULTI-SELECT ──
 function buildFilters(){
   if(!allData.length)return;
   const cols=Object.keys(allData[0]);
   filterDefs=[];
   const grid=document.getElementById('filter-grid');grid.innerHTML='';
-
   cols.slice(0,8).forEach(col=>{
     if(col.includes('不備項目')||col.includes('不良項目'))return;
     const vals=[...new Set(allData.map(r=>r[col]).filter(Boolean))].sort();
@@ -546,23 +676,20 @@ function buildFilters(){
     dd.appendChild(list);
     const foot=document.createElement('div');foot.className='ms-foot';
     const cnt=document.createElement('div');cnt.className='ms-foot-count';cnt.id=`mfc-${def.key}`;cnt.textContent='0件選択';
-    const clr=document.createElement('div');clr.className='ms-foot-clear';clr.textContent='クリア';
-    clr.onclick=()=>clearOne(def.key);
+    const clr=document.createElement('div');clr.className='ms-foot-clear';clr.textContent='クリア';clr.onclick=()=>clearOne(def.key);
     foot.appendChild(cnt);foot.appendChild(clr);dd.appendChild(foot);
     g.appendChild(dd);grid.appendChild(g);
   });
   document.addEventListener('click',()=>closeAllDd());
 }
-
 function toggleDd(key){const dd=document.getElementById(`md-${key}`);const isOpen=dd.classList.contains('open');closeAllDd();if(!isOpen){dd.classList.add('open');document.getElementById(`mb-${key}`)?.classList.add('active');}}
 function closeAllDd(){document.querySelectorAll('.ms-dd.open').forEach(d=>{d.classList.remove('open');document.getElementById('mb-'+d.id.slice(3))?.classList.remove('active');});}
-function filterItems(key,q){document.getElementById(`md-${key}`)?.querySelectorAll('.ms-item').forEach(item=>{item.style.display=item.dataset.v.toLowerCase().includes(q.toLowerCase())?'flex':'none';});}
+function filterItems(key,q){document.getElementById(`md-${key}`)?.querySelectorAll('.ms-item').forEach(i=>{i.style.display=i.dataset.v.toLowerCase().includes(q.toLowerCase())?'flex':'none';});}
 function updBtnLabel(key){
   const s=pending[key];const btn=document.getElementById(`mb-${key}`);const cnt=document.getElementById(`mfc-${key}`);
   if(!btn)return;
-  if(s.size===0){btn.textContent='すべて';btn.classList.remove('has-val');}
-  else if(s.size===1){btn.textContent=[...s][0];btn.classList.add('has-val');}
-  else{btn.textContent=`${s.size}件選択中`;btn.classList.add('has-val');}
+  btn.textContent=s.size===0?'すべて':s.size===1?[...s][0]:`${s.size}件選択中`;
+  btn.classList.toggle('has-val',s.size>0);
   if(cnt)cnt.textContent=`${s.size}件選択`;
 }
 function clearOne(key){
@@ -573,16 +700,14 @@ function clearOne(key){
 
 // ── APPLY ──
 function applyFilters(){
-  closeAllDd();
-  const from=getDateFrom();const to=getDateTo();
+  closeAllDd();closeAllCals();
+  const fromStr=calFromDate?fmtDate(calFromDate):null;
+  const toStr=calToDate?fmtDate(calToDate):null;
 
   filtered=allData.filter(row=>{
-    const ds=rowDateStr(row);
-    if(ds){
-      const d=ds.replace(/\//g,'-'); // YYYY-MM-DD
-      if(from&&d<from)return false;
-      if(to&&d>to)return false;
-    }
+    const ds=rowDateStr(row).replace(/\//g,'-').slice(0,10);
+    if(fromStr&&ds&&ds<fromStr)return false;
+    if(toStr&&ds&&ds>toStr)return false;
     for(const def of filterDefs){
       const s=pending[def.key];if(s.size===0)continue;
       if(def.type==='defect'){if(!defectVals(row).some(v=>s.has(v)))return false;}
@@ -590,144 +715,115 @@ function applyFilters(){
     }
     return true;
   });
-  pg=1;updateKPI();renderBreakdown();renderCharts();renderTable();renderTags();
+  pg=1;updateKPI();buildEachControls();renderCharts();renderTable();renderTags();renderBreakdown();
 }
 
 function clearFilters(){
-  clearPeriod();
+  clearCal('from');clearCal('to');
   filterDefs.forEach(d=>clearOne(d.key));
   applyFilters();
 }
 
 function renderTags(){
   const tags=[];
-  const from=getDateFrom();const to=getDateTo();
-  if(from||to)tags.push(`<div class="ftag">期間：${from||'—'} → ${to||'—'}<span class="ftag-x" onclick="clearPeriod();applyFilters()">✕</span></div>`);
+  if(calFromDate||calToDate)tags.push(`<div class="ftag">期間：${fmtDateJP(calFromDate)||'—'} → ${fmtDateJP(calToDate)||'—'}<span class="ftag-x" onclick="clearCal('from');clearCal('to');applyFilters()">✕</span></div>`);
   filterDefs.forEach(def=>{
-    const s=pending[def.key];
     const label=def.key==='__def__'?'不備項目':def.label;
-    [...s].forEach(v=>tags.push(`<div class="ftag">${label}：${v}<span class="ftag-x" onclick="rmTag('${def.key}','${v.replace(/'/g,"\\'")}')">✕</span></div>`));
+    [...pending[def.key]].forEach(v=>tags.push(`<div class="ftag">${label}：${v}<span class="ftag-x" onclick="rmTag('${def.key}','${v.replace(/'/g,"\\'")}')">✕</span></div>`));
   });
   document.getElementById('filter-tags').innerHTML=tags.join('');
 }
 function rmTag(key,v){pending[key].delete(v);const item=document.querySelector(`#md-${key} [data-v="${v}"]`);if(item){item.classList.remove('sel');item.querySelector('.ms-cb').checked=false;}updBtnLabel(key);applyFilters();}
 
 // ── KPI ──
-function defK(row){const k=gk(row,'不備の有無')||gk(row,'不良の有無');return k&&row[k]==='あり';}
-function sumQty(data){let q=0;data.forEach(r=>Object.keys(r).forEach(k=>{if(k.match(/数量/))q+=parseInt(r[k])||0;}));return q;}
-
 function updateKPI(){
   const N=allData.length,n=filtered.length;
-  const allDef=allData.filter(defK).length;const filDef=filtered.filter(defK).length;
-  const allQty=sumQty(allData);const filQty=sumQty(filtered);
-  const allFac=new Set(allData.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
-  const filFac=new Set(filtered.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
+  const aD=allData.filter(defK).length,fD=filtered.filter(defK).length;
+  const aQ=sumQty(allData),fQ=sumQty(filtered);
+  const aF=new Set(allData.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
+  const fF=new Set(filtered.map(r=>{const k=gk(r,'工場');return k?r[k]:'';}).filter(Boolean)).size;
   const isFil=n<N;
-  set('k-total',n.toLocaleString());
-  set('k-total-sub',isFil?`全体 ${N.toLocaleString()} 件中`:'全データ');
-  set('k-def',filDef.toLocaleString());
-  set('k-def-sub',`不備率 ${n>0?((filDef/n)*100).toFixed(1):'—'}%${isFil?` （全体比 ${((allDef/N)*100).toFixed(1)}%）`:''}`);
-  set('k-qty',filQty.toLocaleString());
-  set('k-qty-sub',isFil?`全体 ${allQty.toLocaleString()} 中`:'数量合計');
-  set('k-fac',filFac);
-  set('k-fac-sub',isFil?`全体 ${allFac} 工場中`:'ユニーク工場');
+  s('k-total',n.toLocaleString());s('k-total-sub',isFil?`全体 ${N.toLocaleString()} 件中`:'全データ');
+  s('k-def',fD.toLocaleString());s('k-def-sub',`不備率 ${n>0?((fD/n)*100).toFixed(1):'—'}%${isFil?` （全体比 ${((aD/N)*100).toFixed(1)}%）`:''}`);
+  s('k-qty',fQ.toLocaleString());s('k-qty-sub',isFil?`全体 ${aQ.toLocaleString()} 中`:'数量合計');
+  s('k-fac',fF);s('k-fac-sub',isFil?`全体 ${aF} 工場中`:'ユニーク工場');
 }
-function set(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
 
 // ── BREAKDOWN ──
-function toggleBreakdown(){
+function toggleBD(){
   bdOpen=!bdOpen;
-  const panel=document.getElementById('breakdown-panel');
-  const btn=document.getElementById('breakdown-btn');
-  const icon=document.getElementById('breakdown-btn-icon');
-  panel.classList.toggle('open',bdOpen);
-  btn.innerHTML=`<span>${bdOpen?'▲':'▼'}</span> ${bdOpen?'内訳を非表示':'内訳を表示'}`;
+  document.getElementById('bd-panel').classList.toggle('open',bdOpen);
+  document.getElementById('bd-btn').innerHTML=`<span>${bdOpen?'▲':'▼'}</span> ${bdOpen?'内訳を非表示':'内訳を表示'}`;
 }
 
 function renderBreakdown(){
   const N=allData.length,n=filtered.length;
-  const isFil=n<N;
-  const bar=document.getElementById('breakdown-bar');
-  const content=document.getElementById('breakdown-content');
-  if(!isFil){bar.style.display='none';return;}
+  const bar=document.getElementById('bd-bar');
+  if(n>=N){bar.style.display='none';if(bdOpen){bdOpen=false;document.getElementById('bd-panel').classList.remove('open');}return;}
   bar.style.display='flex';
-
-  // どのフィルターで絞り込んでいるか検出
   const activeDefs=filterDefs.filter(d=>pending[d.key].size>0);
-  const from=getDateFrom(),to=getDateTo();
-  if(activeDefs.length===0&&!from&&!to){bar.style.display='none';return;}
+  if(!activeDefs.length&&!calFromDate&&!calToDate){bar.style.display='none';return;}
+  s('bd-hint',`${activeDefs.length}項目で絞り込み中`);
 
-  // 内訳を生成（最初のアクティブなフィルターの各値について集計）
-  let tables='';
-  const allDef=allData.filter(defK).length;
-  const allQty=sumQty(allData);
-  const maxVal=allData.length;
-
+  const aD=allData.filter(defK).length;const aQ=sumQty(allData);
+  let html='';
   activeDefs.forEach(def=>{
     const vals=[...pending[def.key]];
     const label=def.key==='__def__'?'不備項目':def.label;
     const rows=vals.map(v=>{
-      const subset=filtered.filter(row=>{
-        if(def.type==='defect')return defectVals(row).includes(v);
-        return row[def.key]===v;
-      });
-      const cnt=subset.length;
-      const defCnt=subset.filter(defK).length;
-      const qty=sumQty(subset);
-      const rate=cnt>0?((defCnt/cnt)*100).toFixed(1):'-';
-      const pct=maxVal>0?Math.round((cnt/maxVal)*100):0;
-      return{v,cnt,defCnt,qty,rate,pct};
+      const sub=filtered.filter(row=>def.type==='defect'?defectVals(row).includes(v):row[def.key]===v);
+      const cnt=sub.length,dCnt=sub.filter(defK).length,qty=sumQty(sub);
+      const pct=N>0?Math.round((cnt/N)*100):0;
+      return{v,cnt,dCnt,qty,rate:cnt>0?((dCnt/cnt)*100).toFixed(1):'-',pct};
     }).sort((a,b)=>b.cnt-a.cnt);
-
-    const totalCnt=filtered.length;
-    const totalDef=filtered.filter(defK).length;
-    const totalQty=sumQty(filtered);
-    const totalRate=totalCnt>0?((totalDef/totalCnt)*100).toFixed(1):'-';
-
-    tables+=`
-    <div style="margin-bottom:20px">
-      <div style="font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:12px">${label}</div>
-      <table class="breakdown-table">
-        <thead><tr>
-          <th>${label}</th><th>件数</th><th>不備あり</th><th>不備率</th><th>不備品数</th><th>割合</th>
-        </tr></thead>
-        <tbody>
-          ${rows.map(r=>`<tr>
-            <td class="bd-highlight">${r.v}</td>
-            <td>${r.cnt.toLocaleString()}</td>
-            <td>${r.defCnt.toLocaleString()}</td>
-            <td>${r.rate}%</td>
-            <td>${r.qty.toLocaleString()}</td>
-            <td><div class="bd-bar-wrap"><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:${r.pct}%"></div></div><span style="font-size:10px;color:var(--text3)">${r.pct}%</span></div></td>
-          </tr>`).join('')}
-          <tr style="border-top:1px solid var(--border)">
-            <td class="bd-total">【絞り込み合計】</td>
-            <td class="bd-total">${totalCnt.toLocaleString()}</td>
-            <td class="bd-total">${totalDef.toLocaleString()}</td>
-            <td class="bd-total">${totalRate}%</td>
-            <td class="bd-total">${totalQty.toLocaleString()}</td>
-            <td>—</td>
-          </tr>
-          <tr>
-            <td class="bd-all">全体</td>
-            <td class="bd-all">${N.toLocaleString()}</td>
-            <td class="bd-all">${allDef.toLocaleString()}</td>
-            <td class="bd-all">${N>0?((allDef/N)*100).toFixed(1):'-'}%</td>
-            <td class="bd-all">${allQty.toLocaleString()}</td>
-            <td>—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>`;
+    const tC=filtered.length,tD=filtered.filter(defK).length,tQ=sumQty(filtered);
+    html+=`<div style="margin-bottom:20px">
+      <div style="font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:10px">${label}</div>
+      <table class="bd-table"><thead><tr><th>${label}</th><th>件数</th><th>不備あり</th><th>不備率</th><th>不備品数</th><th>全体比</th></tr></thead>
+      <tbody>
+      ${rows.map(r=>`<tr><td class="bd-hl">${r.v}</td><td>${r.cnt.toLocaleString()}</td><td>${r.dCnt.toLocaleString()}</td><td>${r.rate}%</td><td>${r.qty.toLocaleString()}</td>
+        <td><div class="bd-bar-wrap"><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:${r.pct}%"></div></div><span style="font-size:10px;color:var(--text3)">${r.pct}%</span></div></td></tr>`).join('')}
+      <tr style="border-top:1px solid var(--border)"><td class="bd-total">絞り込み合計</td><td class="bd-total">${tC.toLocaleString()}</td><td class="bd-total">${tD.toLocaleString()}</td><td class="bd-total">${tC>0?((tD/tC)*100).toFixed(1):'-'}%</td><td class="bd-total">${tQ.toLocaleString()}</td><td>—</td></tr>
+      <tr><td class="bd-all">全体</td><td class="bd-all">${N.toLocaleString()}</td><td class="bd-all">${aD.toLocaleString()}</td><td class="bd-all">${((aD/N)*100).toFixed(1)}%</td><td class="bd-all">${aQ.toLocaleString()}</td><td>—</td></tr>
+      </tbody></table></div>`;
   });
+  document.getElementById('bd-content').innerHTML=html||'<div style="color:var(--text3);font-size:12px">フィルターを選択すると内訳が表示されます</div>';
+}
 
-  content.innerHTML=tables||'<div style="color:var(--text3);font-size:12px">フィルターを選択すると内訳が表示されます</div>';
-  set('breakdown-hint',`${activeDefs.length}項目で絞り込み中`);
+// ── VIEW TABS ──
+function switchView(view,el){
+  currentView=view;
+  document.querySelectorAll('.view-tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('each-controls').classList.toggle('show',view==='each');
+  renderCharts();
+}
+
+// 各数値コントロール（フィルターの選択値ごとにON/OFF）
+function buildEachControls(){
+  const list=document.getElementById('each-ctrl-list');list.innerHTML='';
+  // フィルターがある場合はその値を、なければ工場名を使う
+  const activeDef=filterDefs.find(d=>pending[d.key].size>0&&d.key!=='__def__');
+  let items=[];
+  if(activeDef){items=[...pending[activeDef.key]];}
+  else{
+    // デフォルトは工場名
+    const fk=allData.length?gk(allData[0],'工場'):null;
+    if(fk)items=[...new Set(filtered.map(r=>r[fk]).filter(Boolean))].sort().slice(0,12);
+  }
+  items.forEach((v,i)=>{
+    if(!(v in eachVisible))eachVisible[v]=true;
+    const item=document.createElement('div');item.className=`each-ctrl-item${eachVisible[v]?' on':''}`;
+    item.innerHTML=`<div class="each-ctrl-dot" style="background:${PAL[i%PAL.length]}"></div><span class="each-ctrl-label">${v}</span><input type="checkbox" ${eachVisible[v]?'checked':''} style="display:none">`;
+    item.onclick=()=>{eachVisible[v]=!eachVisible[v];item.classList.toggle('on',eachVisible[v]);item.querySelector('input').checked=eachVisible[v];renderCharts();};
+    list.appendChild(item);
+  });
 }
 
 // ── CHARTS ──
-const PAL=['#aec8e8','#e8b4c0','#c9a96e','#7cc8c8','#c8a8e0','#90c8a0','#e8c870','#b8d8f0','#f0b8b0','#a8c8d8','#d0b8e8','#a8d0b8'];
-const PALPHA=c=>c+'55';
+function defCount(data){const c={};data.forEach(r=>defectVals(r).forEach(v=>{c[v]=(c[v]||0)+1;}));return c;}
+function monthCount(data){const c={};data.forEach(r=>{const m=rowDateStr(r).replace(/\//g,'-').slice(0,7);if(m)c[m]=(c[m]||0)+1;});return c;}
+function facCount(data){const c={};data.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])c[r[k]]=(c[r[k]]||0)+1;});return c;}
 
 function mkChart(id,type,data,opts={}){
   const ctx=document.getElementById(id)?.getContext('2d');if(!ctx)return;
@@ -737,53 +833,98 @@ function mkChart(id,type,data,opts={}){
     scales:type==='doughnut'?{}:{x:{ticks:{color:'#a8bcd0',font:{size:10}},grid:{color:'rgba(174,200,232,0.05)'},border:{color:'transparent'}},y:{ticks:{color:'#a8bcd0',font:{size:10}},grid:{color:'rgba(174,200,232,0.05)'},border:{color:'transparent'}}},...opts}});
 }
 
+function getEachSubsets(){
+  // 各数値モード用：フィルター選択値ごとにデータを分割
+  const activeDef=filterDefs.find(d=>pending[d.key].size>0&&d.key!=='__def__');
+  if(activeDef){
+    return [...pending[activeDef.key]].filter(v=>eachVisible[v]!==false).map((v,i)=>({
+      label:v,color:PAL[i%PAL.length],
+      data:filtered.filter(row=>row[activeDef.key]===v)
+    }));
+  }
+  // デフォルトは工場名
+  const fk=allData.length?gk(allData[0],'工場'):null;
+  if(!fk)return[];
+  const facVals=[...new Set(filtered.map(r=>r[fk]).filter(Boolean))].sort().slice(0,8);
+  return facVals.filter(v=>eachVisible[v]!==false).map((v,i)=>({
+    label:v,color:PAL[i%PAL.length],
+    data:filtered.filter(r=>r[fk]===v)
+  }));
+}
+
 function renderCharts(){
   const isFil=filtered.length<allData.length;
-  function defCount(data){const c={};data.forEach(r=>defectVals(r).forEach(v=>{c[v]=(c[v]||0)+1;}));return c;}
   const allDC=defCount(allData);const filDC=defCount(filtered);
-
-  // ランキング
-  const topKeys=Object.entries(filDC).sort((a,b)=>b[1]-a[1]).slice(0,10).map(x=>x[0]);
-  if(isFil){
-    mkChart('c-rank','bar',{labels:topKeys,datasets:[
-      {label:'絞り込み',data:topKeys.map(k=>filDC[k]||0),backgroundColor:PAL[0],borderRadius:5,borderSkipped:false,order:1},
-      {label:'全体',data:topKeys.map(k=>allDC[k]||0),backgroundColor:PALPHA(PAL[0]),borderRadius:5,borderSkipped:false,order:2}
-    ]},{legend:true});
-    document.getElementById('badge-rank').textContent='絞り込み vs 全体';
-  }else{
-    mkChart('c-rank','bar',{labels:topKeys,datasets:[{label:'件数',data:topKeys.map(k=>filDC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
-    document.getElementById('badge-rank').textContent='全体';
-  }
-
-  // 円グラフ
-  const pieKeys=Object.entries(filDC).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]);
-  mkChart('c-pie','doughnut',{labels:pieKeys,datasets:[{data:pieKeys.map(k=>filDC[k]||0),backgroundColor:PAL,borderWidth:0,hoverOffset:6}]},{legend:true,cutout:'60%'});
-  document.getElementById('badge-pie').textContent=isFil?'絞り込み':'全体';
-
-  // 月別トレンド
-  function monthCount(data){const c={};data.forEach(r=>{const s=rowDateStr(r);const m=s?s.slice(0,7):'';if(m)c[m]=(c[m]||0)+1;});return c;}
   const allMC=monthCount(allData);const filMC=monthCount(filtered);
-  const allMonths=[...new Set([...Object.keys(allMC),...Object.keys(filMC)])].sort();
-  const trendDS=isFil?[
-    {label:'絞り込み',data:allMonths.map(m=>filMC[m]||0),borderColor:PAL[0],backgroundColor:'rgba(174,200,232,0.06)',fill:true,tension:.4,pointRadius:4,borderWidth:2},
-    {label:'全体',data:allMonths.map(m=>allMC[m]||0),borderColor:PAL[2],backgroundColor:'rgba(201,169,110,0.04)',fill:true,tension:.4,pointRadius:3,borderWidth:1.5,borderDash:[4,4]}
-  ]:[{label:'件数',data:allMonths.map(m=>filMC[m]||0),borderColor:PAL[2],backgroundColor:'rgba(201,169,110,0.07)',fill:true,tension:.4,pointRadius:4,borderWidth:2}];
-  mkChart('c-trend','line',{labels:allMonths,datasets:trendDS},{legend:isFil});
-  document.getElementById('badge-trend').textContent=isFil?'絞り込み vs 全体':'件数推移';
-
-  // 工場別
-  function facCount(data){const c={};data.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])c[r[k]]=(c[r[k]]||0)+1;});return c;}
   const allFC=facCount(allData);const filFC=facCount(filtered);
-  const facKeys=Object.entries(filFC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(x=>x[0]);
-  if(isFil){
-    mkChart('c-fac','bar',{labels:facKeys,datasets:[
-      {label:'絞り込み',data:facKeys.map(k=>filFC[k]||0),backgroundColor:PAL[3],borderRadius:5,borderSkipped:false},
-      {label:'全体',data:facKeys.map(k=>allFC[k]||0),backgroundColor:PALPHA(PAL[3]),borderRadius:5,borderSkipped:false}
-    ]},{legend:true});
-    document.getElementById('badge-fac').textContent='絞り込み vs 全体';
+  const allMonths=[...new Set([...Object.keys(allMC),...Object.keys(filMC)])].sort();
+
+  if(currentView==='all'){
+    // 全体表示
+    const topKeys=Object.entries(allDC).sort((a,b)=>b[1]-a[1]).slice(0,10).map(x=>x[0]);
+    mkChart('c-rank','bar',{labels:topKeys,datasets:[{label:'件数',data:topKeys.map(k=>allDC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
+    s('badge-rank','全体');
+    const pieKeys=Object.entries(allDC).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]);
+    mkChart('c-pie','doughnut',{labels:pieKeys,datasets:[{data:pieKeys.map(k=>allDC[k]||0),backgroundColor:PAL,borderWidth:0,hoverOffset:6}]},{legend:true,cutout:'60%'});
+    s('badge-pie','全体');
+    mkChart('c-trend','line',{labels:allMonths,datasets:[{label:'全体',data:allMonths.map(m=>allMC[m]||0),borderColor:PAL[2],backgroundColor:'rgba(201,169,110,0.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2}]});
+    s('badge-trend','全体推移');
+    const facKeys=Object.entries(allFC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(x=>x[0]);
+    mkChart('c-fac','bar',{labels:facKeys,datasets:[{label:'全体',data:facKeys.map(k=>allFC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
+    s('badge-fac','全体');
+
+  }else if(currentView==='total'){
+    // 合計値（絞り込み結果）
+    const topKeys=Object.entries(filDC).sort((a,b)=>b[1]-a[1]).slice(0,10).map(x=>x[0]);
+    if(isFil){
+      mkChart('c-rank','bar',{labels:topKeys,datasets:[
+        {label:'絞り込み',data:topKeys.map(k=>filDC[k]||0),backgroundColor:PAL[0],borderRadius:5,borderSkipped:false},
+        {label:'全体',data:topKeys.map(k=>allDC[k]||0),backgroundColor:PAL[0]+'55',borderRadius:5,borderSkipped:false}
+      ]},{legend:true});
+      s('badge-rank','絞込 vs 全体');
+    }else{
+      mkChart('c-rank','bar',{labels:topKeys,datasets:[{label:'件数',data:topKeys.map(k=>filDC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
+      s('badge-rank','合計値');
+    }
+    const pieKeys=Object.entries(filDC).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]);
+    mkChart('c-pie','doughnut',{labels:pieKeys,datasets:[{data:pieKeys.map(k=>filDC[k]||0),backgroundColor:PAL,borderWidth:0,hoverOffset:6}]},{legend:true,cutout:'60%'});
+    s('badge-pie','絞り込み合計');
+    const trendDS=isFil?[
+      {label:'絞り込み',data:allMonths.map(m=>filMC[m]||0),borderColor:PAL[0],backgroundColor:'rgba(174,200,232,0.06)',fill:true,tension:.4,pointRadius:3,borderWidth:2},
+      {label:'全体',data:allMonths.map(m=>allMC[m]||0),borderColor:PAL[2],backgroundColor:'rgba(201,169,110,0.04)',fill:true,tension:.4,pointRadius:2,borderWidth:1.5,borderDash:[4,4]}
+    ]:[{label:'件数',data:allMonths.map(m=>filMC[m]||0),borderColor:PAL[2],backgroundColor:'rgba(201,169,110,0.07)',fill:true,tension:.4,pointRadius:3,borderWidth:2}];
+    mkChart('c-trend','line',{labels:allMonths,datasets:trendDS},{legend:isFil});
+    s('badge-trend',isFil?'絞込 vs 全体':'合計推移');
+    const facKeys=Object.entries(filFC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(x=>x[0]);
+    if(isFil){
+      mkChart('c-fac','bar',{labels:facKeys,datasets:[
+        {label:'絞り込み',data:facKeys.map(k=>filFC[k]||0),backgroundColor:PAL[3],borderRadius:5,borderSkipped:false},
+        {label:'全体',data:facKeys.map(k=>allFC[k]||0),backgroundColor:PAL[3]+'55',borderRadius:5,borderSkipped:false}
+      ]},{legend:true});
+      s('badge-fac','絞込 vs 全体');
+    }else{
+      mkChart('c-fac','bar',{labels:facKeys,datasets:[{label:'件数',data:facKeys.map(k=>filFC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
+      s('badge-fac','合計値');
+    }
+
   }else{
-    mkChart('c-fac','bar',{labels:facKeys,datasets:[{label:'件数',data:facKeys.map(k=>filFC[k]||0),backgroundColor:PAL,borderRadius:5,borderSkipped:false}]});
-    document.getElementById('badge-fac').textContent='全体比較';
+    // 各数値モード（選択項目ごとに個別の線/棒）
+    const subsets=getEachSubsets();
+    // ランキング
+    const allKeys=[...new Set(subsets.flatMap(sub=>Object.keys(defCount(sub.data))))].slice(0,10);
+    mkChart('c-rank','bar',{labels:allKeys,datasets:subsets.map((sub,i)=>({label:sub.label,data:allKeys.map(k=>(defCount(sub.data)[k]||0)),backgroundColor:sub.color,borderRadius:4,borderSkipped:false}))},{legend:true});
+    s('badge-rank','各数値');
+    // 月別トレンド（各グループを1本の線で）
+    mkChart('c-trend','line',{labels:allMonths,datasets:subsets.map(sub=>({label:sub.label,data:allMonths.map(m=>(monthCount(sub.data)[m]||0)),borderColor:sub.color,backgroundColor:sub.color+'18',fill:true,tension:.4,pointRadius:3,borderWidth:2}))},{legend:true});
+    s('badge-trend','各数値');
+    // 工場別（各数値モードでは合計で表示）
+    const facKeys=Object.entries(filFC).sort((a,b)=>b[1]-a[1]).slice(0,12).map(x=>x[0]);
+    mkChart('c-fac','bar',{labels:facKeys,datasets:subsets.map(sub=>({label:sub.label,data:facKeys.map(k=>(facCount(sub.data)[k]||0)),backgroundColor:sub.color,borderRadius:4,borderSkipped:false}))},{legend:true});
+    s('badge-fac','各数値');
+    // 円グラフは絞り込み全体
+    const pieKeys=Object.entries(filDC).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]);
+    mkChart('c-pie','doughnut',{labels:pieKeys,datasets:[{data:pieKeys.map(k=>filDC[k]||0),backgroundColor:PAL,borderWidth:0,hoverOffset:6}]},{legend:true,cutout:'60%'});
+    s('badge-pie','絞り込み合計');
   }
 }
 
@@ -799,67 +940,85 @@ function renderTable(){
     return `<td title="${v}">${v}</td>`;
   }).join('')}</tr>`).join('');
   const tot=filtered.length,pgs=Math.ceil(tot/PG)||1;
-  set('t-count',`${tot.toLocaleString()} 件`);set('pg-i',`${pg} / ${pgs}`);
+  s('t-count',`${tot.toLocaleString()} 件`);s('pg-i',`${pg} / ${pgs}`);
   document.getElementById('pg-p').disabled=pg<=1;document.getElementById('pg-n').disabled=pg>=pgs;
 }
 function chPg(d){pg+=d;renderTable();}
 
 // ── PDF ──
 function exportPDF(){
-  // 内訳パネルを開く
-  if(!bdOpen&&document.getElementById('breakdown-bar').style.display!=='none'){
-    bdOpen=true;
-    document.getElementById('breakdown-panel').classList.add('open');
+  if(!bdOpen&&document.getElementById('bd-bar').style.display!=='none'){
+    bdOpen=true;document.getElementById('bd-panel').classList.add('open');
   }
-  // PDF用ヘッダーを更新
   const tags=document.getElementById('filter-tags').innerText.replace(/✕/g,'').trim();
   document.getElementById('pdf-date').textContent=`出力日時：${new Date().toLocaleString('ja-JP')}`;
   document.getElementById('pdf-filter-desc').textContent=tags?`絞り込み条件：${tags}`:'絞り込みなし（全データ）';
   setTimeout(()=>window.print(),300);
 }
 
-// ── AI ──
-function swTab(tab,el){document.querySelectorAll('.ai-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('t-rep').style.display=tab==='rep'?'block':'none';document.getElementById('t-chat').style.display=tab==='chat'?'block':'none';}
+// ── GEMINI API ──
+function saveApiKey(){
+  const key=document.getElementById('api-key-input').value.trim();
+  if(!key){alert('APIキーを入力してください');return;}
+  geminiKey=key;
+  const st=document.getElementById('api-status');
+  st.textContent='✓ 保存済み';st.className='api-status ok';
+  setTimeout(()=>{st.textContent='';st.className='api-status';},3000);
+}
+
 function aiSummary(){
   const n=filtered.length,N=allData.length;
   const dc={};filtered.forEach(r=>defectVals(r).forEach(v=>{dc[v]=(dc[v]||0)+1;}));
   const t5=Object.entries(dc).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const fc={};filtered.forEach(r=>{const k=gk(r,'工場');if(k&&r[k])fc[r[k]]=(fc[r[k]]||0)+1;});
-  return `総数:${n}件(全体${N}件) / 不備あり:${filtered.filter(defK).length}件\n不備TOP5:${t5.map((x,i)=>`${i+1}.${x[0]}:${x[1]}`).join(' ')}\n工場別:${Object.entries(fc).slice(0,8).map(([k,v])=>`${k}:${v}`).join(' ')}`;
+  const fD=filtered.filter(defK).length;
+  return `総データ:${N}件 / 絞り込み後:${n}件 / 不備あり:${fD}件(不備率${n>0?((fD/n)*100).toFixed(1):'—'}%)\n不備TOP5:${t5.map((x,i)=>`${i+1}.${x[0]}:${x[1]}件`).join(' ')}\n工場別:${Object.entries(fc).slice(0,8).map(([k,v])=>`${k}:${v}件`).join(' ')}`;
 }
+
+async function callGemini(prompt){
+  if(!geminiKey){alert('Gemini APIキーを入力・保存してください');return null;}
+  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiKey}`,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})
+  });
+  const d=await res.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||'応答が取得できませんでした';
+}
+
 async function genReport(){
   const btn=document.getElementById('rep-btn'),out=document.getElementById('rep-out');
-  btn.disabled=true;btn.innerHTML='✦ &nbsp;分析中...';out.style.display='block';out.textContent='';
+  btn.disabled=true;btn.innerHTML='✦ &nbsp;分析中...';out.style.display='block';out.textContent='分析中...';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`品質管理専門家として日本語で分析してください。\n${aiSummary()}\n\n1.全体サマリー 2.問題不備項目TOP3と原因仮説 3.工場別課題 4.優先改善アクション3点`}]})});
-    const d=await res.json();out.textContent=d.content?.[0]?.text||'エラーが発生しました';
-  }catch(e){out.textContent='AI分析に失敗しました。';}
+    const text=await callGemini('品質管理の専門家として、以下の不備率データを日本語で詳しく分析してください。\n'+aiSummary()+'\n\n以下の観点で分析:\n1. 全体サマリー\n2. 問題不備項目TOP3と原因仮説\n3. 工場別課題\n4. 月別トレンド\n5. 優先改善アクション3点\n\n具体的な数値を引用しながら実践的な提案を含めてください。');
+    out.textContent=text||'エラーが発生しました';
+  }catch(e){out.textContent='エラー：'+e.message;}
   btn.disabled=false;btn.innerHTML='✦ &nbsp;再分析する';
 }
+
+function swTab(tab,el){document.querySelectorAll('.ai-tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('t-rep').style.display=tab==='rep'?'block':'none';document.getElementById('t-chat').style.display=tab==='chat'?'block':'none';}
+
 async function sendChat(){
   const inp=document.getElementById('chat-inp');const msg=inp.value.trim();if(!msg)return;
   inp.value='';addMsg('user',msg);const tid=addTyping();
-  document.getElementById('chat-send').disabled=true;chatHist.push({role:'user',content:msg});
+  document.getElementById('chat-send').disabled=true;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:`品質管理専門家AI。\n${aiSummary()}`,messages:chatHist})});
-    const d=await res.json();const rep=d.content?.[0]?.text||'エラーが発生しました';
-    rmTyping(tid);addMsg('ai',rep);chatHist.push({role:'assistant',content:rep});
-    if(chatHist.length>20)chatHist=chatHist.slice(-20);
-  }catch(e){rmTyping(tid);addMsg('ai','エラーが発生しました。');}
+    const text=await callGemini('品質管理専門家AI。以下データで答えてください。\n'+aiSummary()+'\n\nユーザーの質問：'+msg);
+    rmTyping(tid);addMsg('ai',text);
+  }catch(e){rmTyping(tid);addMsg('ai','エラー：'+e.message);}
   document.getElementById('chat-send').disabled=false;
 }
+
 function useSug(el){document.getElementById('chat-inp').value=el.textContent;sendChat();}
 function addMsg(role,text){
-  const m=document.getElementById('chat-msgs');const d=document.createElement('div');d.className=`cmsg ${role}`;
-  d.innerHTML=`<div class="cav">${role==='ai'?'✦':'·'}</div><div class="cbub">${text.replace(/\n/g,'<br>')}</div>`;
+  const m=document.getElementById('chat-msgs');const d=document.createElement('div');d.className='cmsg '+role;
+  d.innerHTML='<div class="cav">'+(role==='ai'?'✦':'·')+'</div><div class="cbub">'+text.replace(/\n/g,'<br>')+'</div>';
   m.appendChild(d);m.scrollTop=m.scrollHeight;
 }
 function addTyping(){
   const m=document.getElementById('chat-msgs');const id='ty-'+Date.now();
   const d=document.createElement('div');d.className='cmsg ai';d.id=id;
-  d.innerHTML=`<div class="cav">✦</div><div class="cbub"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  d.innerHTML='<div class="cav">✦</div><div class="cbub"><div class="typing"><span></span><span></span><span></span></div></div>';
   m.appendChild(d);m.scrollTop=m.scrollHeight;return id;
 }
 function rmTyping(id){document.getElementById(id)?.remove();}
